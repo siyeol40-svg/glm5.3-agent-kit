@@ -1,5 +1,7 @@
 # 실제 PowerPoint 측정과 렌더 비교
 
+> PACKAGE_NATIVE_LEGACY 전용 문서입니다. 현재 DRM/사용자 캡처 작업에는 실행하지 말고 [com-workflow.md](com-workflow.md)를 따르십시오.
+
 ## 왜 추가하는가
 
 PPTX 객체 속성 비교는 구조를 확인하지만 글자가 실제로 그려질 때 맞는지까지 보장하지 않습니다. 비전 모델의 텍스트 보고도 기하학적 증명이 아닙니다. v0.2는 Windows desktop PowerPoint에서 읽기 전용 측정/렌더를 한 뒤 Python으로 비교합니다. PPT Master 편집 엔진을 대체하거나 fork하지 않습니다.

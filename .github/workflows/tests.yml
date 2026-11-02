@@ -30,5 +30,8 @@ jobs:
         run: |
           $tokens=$null
           $parseErrors=$null
-          [void][System.Management.Automation.Language.Parser]::ParseFile("$pwd/.agents/skills/ppt-reference-fidelity/scripts/powerpoint_probe.ps1", [ref]$tokens, [ref]$parseErrors)
-          if ($parseErrors.Count -gt 0) { $parseErrors | Format-List; exit 1 }
+          foreach ($script in Get-ChildItem "$pwd/.agents/skills/ppt-reference-fidelity/scripts/*.ps1") {
+            $parseErrors=$null
+            [void][System.Management.Automation.Language.Parser]::ParseFile($script.FullName, [ref]$tokens, [ref]$parseErrors)
+            if ($parseErrors.Count -gt 0) { $parseErrors | Format-List; exit 1 }
+          }

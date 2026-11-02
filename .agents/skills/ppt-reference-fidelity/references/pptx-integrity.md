@@ -1,5 +1,7 @@
 # PPTX 무결성과 Manifest 비교
 
+> PACKAGE_NATIVE_LEGACY 전용 문서입니다. 현재 DRM/사용자 캡처 작업에는 실행하지 말고 [com-workflow.md](com-workflow.md)를 따르십시오.
+
 ## 표준 라이브러리 검사
 
 `validate_pptx.py`는 zipfile과 ElementTree로 읽기 전용 검사합니다. 압축을 디스크에 풀거나 문서를 수정하지 않습니다. lxml/python-pptx 없이 실행됩니다.

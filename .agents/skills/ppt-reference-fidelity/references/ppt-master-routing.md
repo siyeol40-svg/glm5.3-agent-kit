@@ -1,5 +1,7 @@
 # PPT Master 연결 계약
 
+> PACKAGE_NATIVE_LEGACY 전용 문서입니다. 현재 DRM/사용자 캡처 작업에는 실행하지 말고 [com-workflow.md](com-workflow.md)를 따르십시오.
+
 검토 기준: 2026-11-03, upstream Skill metadata `6.8.0`. 회사 설치본의 경로·파일 해시·버전을 preflight에 별도 기록합니다. 최신 main을 무조건 재설치하지 않습니다.
 
 직접 확인한 문서와 Git blob SHA:

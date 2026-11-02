@@ -1,5 +1,7 @@
 # Content Mapping Lock
 
+> PACKAGE_NATIVE_LEGACY 전용 문서입니다. 현재 DRM/사용자 캡처 작업에는 실행하지 말고 [com-workflow.md](com-workflow.md)를 따르십시오.
+
 `content_mapping.json`은 편집 전에 확정합니다. 그룹 객체의 key는 `shape-2/shape-3/shape-4`처럼 전체 계층입니다. top-level id 하나로 축약하지 않습니다. 슬라이드 번호는 1부터입니다.
 
 ```json

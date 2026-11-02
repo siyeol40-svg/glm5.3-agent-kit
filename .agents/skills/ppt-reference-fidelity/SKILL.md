@@ -1,48 +1,54 @@
 ---
 name: ppt-reference-fidelity
-description: 기존 PPTX에 새 콘텐츠를 넣으면서 원본 디자인, 객체 구조와 슬롯 의미를 보존할 때 사용합니다. PPT Master Edit Native PPTX를 통제하고 구조·패키지·영역별 시각 QA 증거가 없으면 최종 완료를 차단합니다. 이미지 레퍼런스만으로 새 PPT를 재창작하는 작업에는 적용하지 않습니다.
+description: 레퍼런스 PPT의 디자인 문법을 유지하면서 새 메시지·사진·도해를 기획해 제작합니다. DRM 환경에서는 PowerPoint COM 객체 편집과 사용자 제공 캡처만 사용하며, 기존 콘텐츠 잔존·문장만 치환한 결과·도구의 허위 시각 QA 통과를 차단합니다.
 ---
 
-# PPT Reference Fidelity
+# PPT Reference Fidelity · v0.3
 
-기존 디자인을 다시 창작하지 마십시오. 이 Skill은 PPT Master의 상위 제약이며 실행 엔진의 대체 구현이 아닙니다.
+**디자인을 보존하되 콘텐츠를 새로 설계하십시오.** 기존 사진·도해·문장을 그대로 남기는 복사 작업과 구분하십시오. 현 환경의 기본 프로필은 `COM_USER_CAPTURE`입니다.
 
-## 실행 전 읽기
+## 필요한 문서만 단계적으로 읽기
 
-이 Skill의 실제 절대 경로를 `FIDELITY_DIR`, 설치된 PPT Master의 실제 절대 경로를 `PPT_MASTER_DIR`로 사용하십시오. 경로를 추정하지 마십시오.
+1. [com-workflow.md](references/com-workflow.md): 현재 기본 실행·파일 계약.
+2. 접근/편집 전에 [com-precautions.md](references/com-precautions.md): DRM·COM·서식·복사본·재열기 주의사항.
+3. 계획 전에 [content-adaptation.md](references/content-adaptation.md), [content-authority.md](references/content-authority.md): 메시지·새 시각 자료와 사실 근거.
+4. 캡처 검토 전에 [user-capture-qa.md](references/user-capture-qa.md): 도구 의견·미확인·사용자 지적·최종 수용 분리.
+5. ZIP 경로가 실제 허용된 일반 문서 작업에만 [ppt-master-routing.md](references/ppt-master-routing.md), [workflow.md](references/workflow.md)의 legacy 경로를 읽으십시오.
 
-1. [workflow.md](references/workflow.md)의 현재 단계와 실행 계약을 먼저 읽으십시오.
-2. route 단계에 [ppt-master-routing.md](references/ppt-master-routing.md)와 실제 엔진의 SKILL/routing/edit-native 문서만 읽으십시오. guard 실패를 우회하지 마십시오.
-3. 계획 시 [content-authority.md](references/content-authority.md), [content-mapping.md](references/content-mapping.md)를 읽으십시오.
-4. 구조 검사 시 [pptx-integrity.md](references/pptx-integrity.md), native 측정 시 [native-validation.md](references/native-validation.md)를 읽으십시오.
-5. 잔여 시각 검토에만 [visual-qa.md](references/visual-qa.md)를 읽으십시오. 관련 실패가 있으면 [failure-patterns.md](references/failure-patterns.md)의 해당 항목을 확인하십시오.
+전체 XML/manifest/base64와 모든 참조 문서를 한 번에 대화에 넣지 마십시오. 200,000토큰 실행기 예산과 이미지 도구별 제한을 분리하십시오.
 
-전체 XML·manifest·base64와 모든 참조 문서를 한 번에 대화에 출력하지 마십시오. 도구로 필요한 부분을 조회하고 로컬 증거 파일을 유지하십시오. 200,000토큰 실행기 예산과 각 이미지 도구의 입력 제한은 별개입니다.
+## COM_USER_CAPTURE 실행 순서
 
-## 고정 순서
+`실제 권한 확인 → COM 원본 객체 목록 → 메시지·시각 콘텐츠 기획 → 슬롯/변경 허용 잠금 → COM 복사본 편집 → 저장·닫기·재열기 → COM 속성·내용 비교 → 사용자 캡처 대기 → 잔여 결함 검토/수정 → 사용자 최종 수용`
 
-`Preflight → Route Selection → Reference Authority Contract → Reference Manifest → Content Mapping Lock → Source-Preserving Edit → Structural Validation → PPTX Package Integrity → Native Layout Check → Native Render Evidence → Unchanged-region Pixel Diff → Residual Visual QA → Final Delivery`
+- 현 프로필에서 `inspect_pptx.py`, `validate_pptx.py`, legacy `gate.py`, PPT Master roundtrip을 DRM 문서에 실행하지 마십시오. 이들은 패키지 접근을 요구합니다.
+- `com_native_manifest.ps1`은 읽기 전용 객체 목록 도구입니다. `com_workflow.py`는 기획·증거 검사기이며 완성된 범용 COM 편집 엔진이 아닙니다. 실제 편집은 계획에 맞는 로컬 COM 코드/승인된 작업으로 수행하고 기록하십시오.
+- 자동 이미지/PDF export, 자동 screenshot, 렌더 비교를 필수화하지 마십시오. 사용자님이 전달한 캡처만 시각 QA 입력입니다.
+- COM에서 열 수 있다는 이유로 수정/별도 저장/증거 출력도 허용된다고 가정하지 마십시오. 제한을 우회하거나 DRM을 해제하지 마십시오.
+- v0.2 RUN·영수증을 재사용하지 말고 새 작업 revision을 만드십시오.
 
-각 단계 파일을 만든 후 `scripts/gate.py advance --stage <stage>`를 실행하십시오. 이전 단계가 없거나 FAIL이면 다음 단계로 진입하지 마십시오. `gate.py finalize`가 현재 candidate 해시로 PASS 영수증을 생성하기 전에는 최종본으로 배포하지 마십시오. 파일이 존재한다는 사실만으로 통과시키지 마십시오.
+## 디자인 보존과 창작의 경계
 
-## 원본 보존
+- 고정할 디자인 앵커: 컬러·폰트 위계·제목 위치·프레임·여백·선/테두리·그림자·정렬 문법.
+- 새로 기획할 콘텐츠: 핵심 메시지, 설명 순서, 새 주제의 사진 선택, 비교·과정·관계 도해, 데이터 표현.
+- 레퍼런스의 모든 재귀 객체에 text/photo/diagram/chart/decoration/logo/container/design_anchor 역할을 부여하십시오. 그룹 안의 사진·도해를 놓치지 마십시오.
+- 기존 photo/diagram/chart는 원칙적으로 새 자료로 교체·재구성하십시오. 사용자 유지 승인이나 명확한 디자인 장식 분류 없이는 그대로 남기지 마십시오.
+- 자료가 없으면 기존 사진으로 메우지 마십시오. 실제 사진이 필수면 필요한 자료를 요청하고, 개념 도해로 충분하면 새 자료의 관계를 native 도형으로 표현하십시오. 사진 슬롯을 기술 도해로 몰래 바꾸지 마십시오.
+- 새 사진·도해의 무엇이 메시지를 설명하는지 적으십시오. 의미 없는 장식 추가·새 색상·도형 수 증가를 창의성으로 포장하지 마십시오.
+- 생성 이미지·예시 수치는 현장 사실이나 실제 실적으로 제시하지 마십시오.
+- 새 시각 자료에 필요한 객체 추가/교체/삭제는 편집 전 계획에서 허용하십시오. 구버전의 객체 수 고정 규칙 때문에 필요한 콘텐츠 재구성을 막지 마십시오.
 
-- 원본 PPTX가 있고 디자인 유지가 목적이면 `Edit Native PPTX`를 선택하십시오. 이미지/PDF만 있으면 이 경로를 가장하지 말고 입력 부족을 보고하십시오.
-- 원본 파일은 읽기 전용으로 다루고 candidate를 별도 파일로 만드십시오.
-- 원본 구조로 요구를 만족시킬 수 없는 이유가 확인되면 기록하십시오. 다른 경로가 필요하면 이 Skill의 완료 처리를 중단하고 새 계획으로 전환하십시오.
-- Generate 파이프라인, 임의 새 레이아웃, 슬라이드 XML만 deepcopy하는 복제를 사용하지 마십시오.
-- 엔진의 native backing과 `data-pptx-*` 식별자를 보존하십시오. 비수정 객체·프레임·좌표·효과를 유지하십시오.
-- 그룹 내부와 중첩 그룹의 텍스트까지 매핑하십시오. 상위 shapes만 검사하지 마십시오.
-- 실제 객체 치수·회전·crop·그룹 변환을 먼저 읽으십시오. 로컬 좌표를 슬라이드 절대 좌표로 오인하지 마십시오.
-- 텍스트가 넘치면 문장 압축 → 줄바꿈 조정 → 기존 공간 내 미세 조정 순으로 해결하십시오. 미세 조정도 잠금에 기록하십시오. 글자 축소나 구조 변경은 마지막 수단입니다.
-- 사진 슬롯에는 사진, 하단 기술 도해 슬롯에는 기술 도해를 넣으십시오. 디자인 변경을 사후 정당화하지 마십시오.
+## COM 편집
 
-## 검증과 중단
+- 원본을 프로그램 내부에서 승인된 복사본으로 만들고 해당 복사본만 수정하십시오. 처음부터 모든 도형을 새로 그리지 마십시오.
+- 그룹/shape identity와 서식을 기록하고 의도된 대상만 변경하십시오. 혼합 서식 텍스트를 통째로 덮어써 스타일을 잃지 마십시오.
+- 사진 교체 시 프레임뿐 아니라 crop·종횡비·회전·레이어·테두리·그림자를 확인하십시오. 새 이미지를 크기에 억지로 늘리지 마십시오.
+- COM에서 읽을 수 없는 속성·SmartArt·차트/표 내부 데이터는 모른다고 기록하십시오. 사용자 캡처 수용을 ZIP 무결성 검증으로 바꾸지 마십시오.
 
-- 새 자료만 사실 근거로 사용하십시오. 레퍼런스의 기존 숫자·기관명·문장을 새 사실로 사용하지 마십시오.
-- Mapping Lock의 정확한 before/after 허용 목록 외 구조 차이는 FAIL입니다. 결과를 본 뒤 차이를 일괄 허용하지 마십시오.
-- 매핑·입력·candidate가 바뀌면 `gate.py invalidate --stage ... --reason ...`로 영향 단계부터 재실행하십시오.
-- 객체·native layout·픽셀 검사를 먼저 수행하십시오. 전체 축소본은 배치/위계만 확인하고, 제목·각 카드·하단 도해의 상세 영역에서 남은 결함을 검토하십시오. 검토하지 않은 항목은 `NOT REVIEWED`입니다.
-- GLM-5.3의 텍스트 입력만으로 이미지 QA를 했다고 주장하지 마십시오. 실제 사람 또는 관측 가능한 이미지 분석 도구가 필요합니다.
-- 검사 실패·렌더 불가·이미지 검토 수단 부재 시 candidate와 진단만 보고하십시오. 모든 상태를 PASS로 채워 넣지 마십시오.
-- 이 도구는 협조적인 실행자의 실수를 막는 로컬 검증입니다. 조작 불가능한 증명이나 시각적 완벽성을 보장하지 않습니다.
+## 검토 상태
+
+- 스크립트·도구 보고만으로 시각적 완벽함이나 창의성을 보장하지 마십시오.
+- 캡처를 받기 전 `AWAITING_USER_CAPTURE`, 검토 의견 후 `AWAITING_USER_ACCEPTANCE`로 남기십시오.
+- 사용자 지적은 known_issues.json에 기록하고, 근거 없이 오탐·취향·의도라고 정당화하지 마십시오.
+- 도구가 이미지를 처리했다는 증거가 없거나 결함을 알아보지 못하면 그 의견은 신뢰 가능한 검증 증거가 아닙니다. 더 많은 같은 호출을 반복하지 마십시오.
+- 현재 결과에 대한 실제 사용자 수용만 `USER_ACCEPTED_WITH_LIMITATIONS`로 기록하십시오. 누락된 속성·패키지 검사까지 PASS라고 주장하지 마십시오.

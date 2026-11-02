@@ -1,0 +1,94 @@
+{
+  "schema": "kit.content-blueprint.v1",
+  "locked": true,
+  "reference_revision": "<digest of actual reference_native.identity>",
+  "slides": [
+    {
+      "slide": 1,
+      "message": "새 자료의 핵심 메시지 한 문장",
+      "audience_takeaway": "독자가 이해하거나 판단해야 할 내용",
+      "source_refs": [
+        "새 자료의 실제 절/페이지"
+      ],
+      "visual_story": "사진이 증명할 대상과 하단 도해가 설명할 관계를 구분",
+      "design_anchors": [
+        "제목 위치",
+        "카드 프레임과 여백",
+        "컬러와 폰트 위계"
+      ],
+      "classification": [
+        {
+          "target": "shape-4",
+          "role": "text",
+          "reason": "메시지 제목"
+        },
+        {
+          "target": "shape-5",
+          "role": "photo",
+          "reason": "이전 주제의 사진이므로 새 주제 자산으로 교체"
+        }
+      ],
+      "text_slots": [
+        {
+          "target": "shape-4",
+          "expected_text": "새로운 메시지형 제목",
+          "source_ref": "새 자료의 핵심 주장"
+        }
+      ],
+      "visual_slots": [
+        {
+          "id": "new-subject-photo",
+          "target": "shape-5",
+          "role": "photo",
+          "decision": "replace",
+          "rationale": "레퍼런스 사진은 새 주제의 근거가 아님",
+          "source_refs": [
+            "사용자가 제공한 새 사진의 설명"
+          ],
+          "new_concept": "새 주제의 실제 대상과 변화가 보이는 사진을 선택",
+          "implementation": "실제 지원되는 COM/UI 사진 교체; frame/crop/effects/레이어 확인",
+          "acceptance_criteria": [
+            "옛 대상 사진이 남지 않음",
+            "새 대상이 선명함",
+            "원본 프레임과 위계 유지"
+          ],
+          "asset_origin": "user_supplied",
+          "fact_role": "evidence"
+        }
+      ],
+      "capture_regions": [
+        {
+          "id": "s1-full",
+          "scope": "overview"
+        },
+        {
+          "id": "s1-content",
+          "scope": "detail",
+          "targets": [
+            "shape-4",
+            "shape-5"
+          ]
+        }
+      ],
+      "visual_options": [
+        {
+          "id": "A",
+          "concept": "새 대상 사진에서 핵심 근거를 표시하고 하단에 역할 관계를 요약",
+          "source_refs": [
+            "사용자가 제공한 실제 사진과 새 자료"
+          ]
+        },
+        {
+          "id": "B",
+          "concept": "새 자료의 과정 흐름을 하단 도해로 설명하고 사진은 해당 단계의 증거로 배치",
+          "source_refs": [
+            "새 자료의 단계/관계 설명"
+          ]
+        }
+      ],
+      "selected_option": "A",
+      "selection_reason": "현재 카드 프레임과 자료의 핵심 증거를 가장 간단히 연결함"
+    }
+  ],
+  "allowed_native_changes": []
+}

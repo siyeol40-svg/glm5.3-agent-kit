@@ -1,5 +1,7 @@
 # 전체 및 영역별 Visual QA
 
+> PACKAGE_NATIVE_LEGACY 전용 문서입니다. 현재 DRM/사용자 캡처 작업에는 실행하지 말고 [com-workflow.md](com-workflow.md)를 따르십시오.
+
 v0.2에서는 객체·패키지·native layout·pixel 검사를 먼저 실행합니다. 이미지 분석은 그 결과로 해결되지 않은 의미·가림·시각적 결함을 보조 확인합니다. 전체 고해상도 이미지 두 장을 비전 도구에 기본으로 넣지 않습니다.
 
 ## 렌더는 최종 PPTX에서

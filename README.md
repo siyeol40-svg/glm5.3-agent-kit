@@ -1,50 +1,48 @@
-# GLM-5.3 Agent Kit · v0.2
+# GLM-5.3 Agent Kit · v0.3
 
-**회사 에이전트에게 이 README를 전달하면, 아래 절차에 따라 로컬 AGENTS.md와 Skill을 백업·갱신하고 기존 PPT를 다시 제작하도록 하는 진입점입니다.** 사용자가 여러 파일을 따로 붙여 넣을 필요는 없습니다. 실행 에이전트는 저장소의 필요한 파일을 직접 읽고 실행해야 합니다. README를 열기만 해도 프로그램이 실행되거나 권한이 생기는 것은 아닙니다.
+**이 README를 회사 에이전트에게 전달하면 로컬 지침을 백업·갱신하고, 원본 디자인 문법을 살리면서 새 내용·사진·도해를 기획하여 PPT를 재제작하는 진입점입니다.** README 열람만으로 프로그램이 실행되지는 않으며, 에이전트가 아래 지침과 필요한 저장소 파일을 읽고 실행합니다.
 
-## 이 README를 받은 실행 에이전트에게
+현재 기본 프로필은 **COM_USER_CAPTURE**입니다. DRM 문서의 ZIP/XML 직접 접근을 요구하지 않으며, 모든 시각 QA 입력은 **사용자가 제공한 캡처**입니다. 도구가 캡처를 보고도 결함을 못 찾는 상황을 반영해, 모델의 “이상 없음”을 최종 품질 통과로 쓰지 않습니다.
 
-사용자가 이 Kit 적용과 PPT 재제작을 요청했다면 아래 작업은 요청 범위 안에서 계속 수행하십시오. 계획만 설명하고 멈추거나 매 단계 다시 허락을 묻지 마십시오. 입력 파일·쓰기 권한 등 필수 정보가 실제로 없을 때만 부족한 항목을 묶어서 질문하십시오. 지침 변경은 아래 백업 절차를 거친 **회사 로컬 파일**에만 적용합니다. 개인 GitHub 인증이나 회사 자료의 외부 업로드를 요구하지 않습니다.
+## 이 README를 받은 에이전트가 수행할 작업
 
-### 1. 현재 작업과 실행 환경을 실제로 확인하십시오
+사용자가 이 Kit 적용과 PPT 재제작을 요청했다면 계획 설명에 그치지 말고 아래 작업을 계속 수행하십시오. 백업·로컬 지침 갱신·허용된 COM 작업은 요청 범위입니다. 매 단계 권한을 다시 묻지 않습니다. 실제 입력·작업 권한이 없을 때만 필요한 항목을 묶어 질문합니다. 시각 QA 시점에 필요한 사용자 캡처를 구체적으로 요청하는 것은 입력 수집입니다.
 
-1. 이 저장소를 승인된 read-only 경로로 내려받고 commit을 기록하십시오. Kit checkout은 변경하지 않고 별도 프로젝트에 적용합니다.
-2. 기존 대화와 현재 프로젝트에서 원본 레퍼런스 PPTX, 새 내용·사진, 직전 실패 결과를 찾으십시오. 파일을 먼저 읽고 원본/결과를 구분하십시오. 실패 결과를 원본 대신 사용하지 마십시오.
-3. 프로젝트·상위·사용자 범위에서 **실제 자동 로딩되는** AGENTS.md/agent.md/SKILL.md 경로와 기존 규칙을 확인하십시오. 실제 실행기의 탐지 결과와 대조하십시오. `.agents/skills/`를 지원한다고 추정하지 마십시오.
-4. 설치된 PPT Master의 실제 절대 경로와 버전을 확인하십시오. PPT Master는 실행 엔진으로 유지하고 전체 fork/복사하지 않습니다.
-5. Windows용 PowerPoint 데스크톱, 승인된 PowerShell/COM 실행, Python 3.10+, Pillow 여부를 확인하십시오. 실행 정책을 우회하거나 외부 서비스·패키지를 임의 설치하지 마십시오.
-6. 대상 실행기의 보고 한도는 **200,000토큰**입니다. 이는 적은 한도가 아니며, 이미지 도구의 별도 제한과 혼동하지 마십시오. 계측·단계적 로딩·파일 기반 증거 관리를 적용하십시오.
+### 1. 실제 파일과 접근 방식 확인
 
-### 2. 기존 지침을 백업하고 자동으로 교체하십시오
+1. 저장소를 회사가 허용한 읽기 경로로 내려받고 commit을 기록합니다. 개인 GitHub 인증을 회사에 넣지 않습니다.
+2. 원본 레퍼런스 PPTX, 새 업무 자료·사진, 직전 실패 후보와 사용자 피드백을 찾고 실제로 읽습니다. 실패 후보를 원본 대신 쓰지 않습니다. 보호 PPTX의 실제 읽기는 승인된 PowerPoint 객체 접근을 뜻하며 ZIP 파서를 먼저 시도하라는 지시가 아닙니다.
+3. DRM 보호 파일이 ZIP으로 안 열린다고 손상됐다고 단정하지 않습니다. 같은 패키지 접근을 반복하지 않습니다. PowerPoint UI/COM에서 열기·객체 읽기·복사본 생성·수정·저장·재열기 권한을 각각 확인합니다.
+4. 지금은 사용자 캡처만 허용된 시각 QA입니다. 자동 PNG/PDF export, 자동 screenshot, 다른 프로그램을 통한 이미지 추출을 시도하지 않습니다. DRM 해제·비보호 문서 추출로 해결하지 않습니다.
+5. 별도 파일·명령·도구가 있다고 추정하지 않습니다. 회사 허용 로컬 증거 폴더를 확인합니다. 컨텍스트 보고 한도 200,000토큰과 이미지 도구 한도를 구분합니다.
 
-**백업 → 중복 Skill 자동 로딩 해제 → 충돌 해결 → 새 AGENTS/Skill 적용 → 실제 로딩 확인 → 테스트** 순서입니다. 구 파일 삭제는 마지막 선택이며 필수가 아닙니다.
+### 2. 기존 AGENTS.md / Skill을 백업하고 새 버전 적용
 
-- 기존 지침을 읽고 사내 필수 규칙·명령을 회사 로컬 overlay 파일에 보존하십시오. 충돌하는 자유 재디자인·렌더=QA 지침은 그대로 이어 붙이지 말고 새 흐름과 맞게 정리하십시오.
-- 중복 PPT Skill만 비활성화 대상으로 선정하십시오. **ppt-master는 유지**하십시오.
-- 실제 스캔 범위 밖의 새 백업 폴더를 선택하십시오. 검색되는 폴더 안에 `.bak`로 이름만 바꾸는 방식은 쓰지 마십시오.
-- 아래 형식의 `bootstrap-plan.json`을 회사 로컬에 작성하십시오. 예시 문자열은 실제 관측한 절대 경로·해시로 채우십시오. 값이나 파일을 이 공개 저장소에 저장하지 마십시오.
+**백업 → 중복 자동 로딩 해제 → 충돌 해결 → 새 지침 적용 → 실제 로딩 확인 → 테스트** 순서입니다.
+
+실제 로딩되는 프로젝트/상위/사용자 범위 AGENTS.md·agent.md·Skill 위치를 확인합니다. 사내 필수 명령·규칙을 로컬 overlay 파일에 보존하고, 자유 재디자인 또는 “도형 수 무조건 고정”처럼 현재 계획과 충돌하는 규칙은 정리합니다. 새로운 시각 콘텐츠를 만드는 데 필요한 객체 변경을 무조건 금지하지 않습니다.
+
+아래 bootstrap-plan.json을 회사 로컬에 실제 경로·원본 해시·검토 근거로 작성합니다. `<...>` 예시는 그대로 실행하지 않습니다.
 
 ```json
 {
   "schema": "kit.bootstrap-plan.v1",
-  "project_root": "<observed absolute project path>",
-  "backup_root": "<new absolute path outside all scanner roots>",
-  "skill_destination": "<actual active skill path>/ppt-reference-fidelity",
+  "project_root": "<actual project root>",
+  "backup_root": "<new backup directory outside all active scanner trees>",
+  "skill_destination": "<actual active Skill directory>/ppt-reference-fidelity",
   "local_overlay_file": "<reviewed company-local rules file>",
-  "agents_files": [
-    {
-      "path": "<actual loaded AGENTS.md or agent.md path>",
-      "expected_sha256": "<original file SHA256; omit only for a new file>",
-      "review_note": "사내 필수 규칙을 overlay에 보존하고 충돌을 해결한 구체적 근거"
-    }
-  ],
-  "disable_skill_dirs": ["<exact reviewed duplicate Skill directory; empty array if none>"],
+  "agents_files": [{
+    "path": "<actual loaded AGENTS.md or agent.md>",
+    "expected_sha256": "<original instruction file SHA256; omit only for a new file>",
+    "review_note": "보존한 사내 규칙과 해결한 충돌의 실제 근거"
+  }],
+  "disable_skill_dirs": [],
   "conflicts_resolved": true,
   "loading_evidence": "실제 실행기의 지침 탐지 결과와 확인한 스캔 범위"
 }
 ```
 
-`review_note`는 실제 검토 내용을 한국어로 작성하십시오. overlay에 보존할 사내 규칙이 없다면 빈 파일을 명시적으로 만드십시오. 여러 AGENTS 파일은 각 범위의 필수 규칙이 상충하지 않는지 확인하십시오. 범위별 규칙은 해당 agents_files 항목의 선택 필드 overlay_file(실제 절대 경로)로 분리해 기존 적용 범위를 유지할 수 있습니다.
+역할이 중복되는 커스텀 PPT Skill만 disable_skill_dirs에 정확한 경로로 넣습니다. ppt-master 설치 파일은 보존하지만 **이 프로필에서는 실행 엔진으로 호출하지 않습니다.** 자동 로딩 충돌은 실행기의 지원 방식으로 작업 대상에서 제외하고 확인합니다. 파일을 검색 폴더 안에서 `.bak`로만 바꾸는 방식은 쓰지 않습니다.
 
 ```text
 python <KIT>/scripts/bootstrap.py check <RUN>/bootstrap-plan.json
@@ -52,84 +50,70 @@ python <KIT>/scripts/bootstrap.py apply <RUN>/bootstrap-plan.json
 python <KIT>/scripts/bootstrap.py verify <BACKUP>/receipt.json
 ```
 
-스크립트는 모든 원본을 먼저 해시 검증하며 백업하고, AGENTS를 Kit 공통 규칙+검토된 로컬 overlay로 교체하며, 중복 Skill은 백업 후 로딩 위치에서 제거하고 새 Skill 폴더 전체를 설치합니다. 기존 백업을 덮어쓰지 않습니다. 이미 적용된 경우에는 receipt 검증부터 하십시오. 재실행이 필요하면 변경된 현재 파일을 다시 읽고 새 계획·백업을 만드십시오.
+모든 원본을 먼저 백업·해시 검증한 뒤 AGENTS를 공통 규칙+로컬 overlay로 교체하고 Skill 폴더 전체를 적용합니다. 기존 백업을 덮어쓰지 않습니다. 범위별 규칙은 agents_files의 선택 필드 overlay_file로 보존합니다. 문제 시 rollback을 사용하며, 적용 후 별도 수정이 있으면 덮어쓰지 않고 조정합니다. [마이그레이션 상세](docs/migration-guide.md)
 
-그다음 실제 에이전트의 로딩 기록/탐지 결과로 새 파일이 활성화됐는지 확인하고 `instruction_loading.json`에 아래 계약대로 경로·해시·확인 근거를 기록하십시오. preflight gate가 이 파일과 설치 상태를 재검사합니다.
+실제 활성 지침을 확인하고 instruction_loading.json에 status=PASS, active_files[{path,sha256}], evidence{path,sha256}, bootstrap_receipt{path,sha256}를 기록합니다. 파일 복사만 성공했거나 세션에 구 지침이 남아 있으면 로딩 PASS가 아닙니다. 실제 실행기가 지원하는 재개 방법을 확인하고 checkpoint로 이어갑니다.
 
-```json
-{
-  "schema": "kit.loading.v1",
-  "status": "PASS",
-  "active_files": [{"path": "<actual active instruction file>", "sha256": "<hash>"}],
-  "evidence": {"path": "<actual runtime loading log or observation record>", "sha256": "<hash>"},
-  "bootstrap_receipt": {"path": "<BACKUP>/receipt.json", "sha256": "<hash>"}
-}
-```
+### 3. “문장만 옮긴 복사본”을 막는 콘텐츠 기획
 
-active_files에는 실제 로딩된 AGENTS 및 Skill 파일을 모두 적습니다. 근거가 단지 추정이거나 파일 복사만 확인된 경우 status를 PASS로 적지 마십시오. 파일 복사 성공만으로 실제 로딩 성공이라고 보고하지 마십시오. 구 지침이 현재 세션에 캐시되어 있다면 기존 지침의 실제 효력이 해제되는 재개 방법을 확인하고 checkpoint에서 이어가십시오.
+설치된 SKILL.md → references/com-workflow.md → com-precautions.md → content-adaptation.md 순으로 현재 단계의 문서만 읽습니다. ZIP/자동 렌더 기반 legacy 문서는 이 프로필에 로딩하지 않습니다.
 
-문제 시 `python <KIT>/scripts/bootstrap.py rollback <BACKUP>/receipt.json`으로 복원합니다. 적용 후 수동 변경이 있으면 덮어쓰지 않고 멈추므로 해당 변경을 먼저 조정하십시오. [상세 마이그레이션](docs/migration-guide.md)
+각 페이지의 핵심 메시지·독자 이해 목표·사실 출처·시각 표현을 먼저 기획합니다. 구체적인 시각 표현 2안을 짧게 비교한 뒤 자료와 원본 문법에 맞는 안을 스스로 선택하고 이유를 남깁니다. 형식적인 색상 변형이나 사용자 선택 대기를 기본값으로 하지 않습니다. COM의 재귀 객체 목록을 기준으로 원본의 **모든 사진·그림·차트**에 교체/재구성/추가/장식 유지/사용자 승인 유지/삭제 결정을 적습니다.
 
-### 3. 설치된 Skill을 읽고 원본 구조로 PPT를 다시 제작하십시오
+- 디자인 앵커: 컬러, 폰트 위계, 제목 위치, 프레임, 여백, 선·그림자·정렬 문법.
+- 새로 구성할 콘텐츠: 메시지, 설명 순서, 새 사진의 대상, 관계/과정/대비 도해, 데이터 표현.
+- 기존 사업 사진·기술 그림을 “스타일 유지”라는 이유로 그대로 쓰지 않습니다. 내용이 있는 사진/그림을 장식으로 재분류해 남기지 않습니다.
+- 새 사진이 없으면 기존 사진으로 메우지 않습니다. 실제 사진이 필수면 자료를 요청하고 미완성으로 남깁니다. 개념 설명이면 새 자료의 관계를 native 도형으로 시각화할 수 있습니다.
+- 사진 슬롯과 하단 기술 도해 역할을 지킵니다. 필요한 역할 변경/새 객체는 기획에 명시하고 원본 디자인 문법 안에서 구성합니다.
+- “새롭게/창의적으로” 같은 추상적 지시로 끝내지 않고 각 시각 자료의 새 컨셉·구현 방법·확인 기준을 적습니다. 생성 이미지·가상 수치를 실제 현장이나 실적으로 제시하지 않습니다.
 
-1. 설치한 `ppt-reference-fidelity/SKILL.md`를 읽고 필요한 참조 문서를 단계적으로 읽으십시오.
-2. PPT Master의 `SKILL.md → attribution guard → routing.md → edit-native-pptx.md` 순서를 따르십시오. guard 실패는 우회하지 마십시오.
-3. `Edit Native PPTX`를 선택하십시오. Generate 파이프라인이나 슬라이드 XML만 deepcopy하는 방식으로 바꾸지 마십시오.
-4. 디자인의 권위는 원본 PPTX, 사실·수치의 권위는 새 자료로 분리하십시오. 그룹 내부까지 원본 manifest를 추출하십시오.
-5. 원래 제목·카드·사진·하단 도해에 들어갈 콘텐츠, 허용 변경, 검사 영역과 픽셀 mask를 **편집 전** 고정하십시오. 이전 실패 매핑을 무심코 재사용하지 마십시오.
-6. 이미 존재하는 도형·좌표·레이어·효과를 유지하고 필요한 텍스트·이미지만 교체하십시오. 넘치면 문장 압축/줄바꿈부터 해결하십시오.
-7. candidate를 별도 생성하고 아래 검사를 실행하십시오. 전체 명령·증거 형식은 [workflow.md](.agents/skills/ppt-reference-fidelity/references/workflow.md)를 읽으십시오.
-
-### 4. 이미지 도구보다 구조·실측·픽셀 검사를 먼저 수행하십시오
-
-| 순서 | 검사 | 실행 도구 |
-|---|---|---|
-| 1 | 재귀 객체·문구·좌표·스타일 비교 | inspect_pptx.py, compare_manifests.py |
-| 2 | ZIP/XML/관계/media 무결성 | validate_pptx.py |
-| 3 | 실제 PowerPoint 측정과 동일 환경 렌더 | powerpoint_probe.ps1 |
-| 4 | 텍스트 경계·여백·폰트/자동축소 확인 | layout_check.py |
-| 5 | 사전 허용한 수정 영역 밖의 픽셀 비교 | pixel_diff.py |
-| 6 | 내용 의미·가림·사진 적절성 등 잔여 검토 | look_at 또는 multimodal-looker/사람 |
-| 7 | 현재 candidate에 모든 gate 재검사 | gate.py finalize |
-
-PowerPoint 실행 예시: 실행 정책을 우회하는 옵션은 사용하지 않습니다. 실제 실행 가능한 PowerShell 명령과 절대 경로로 바꾸십시오.
+content_blueprint.json을 작성하고 검사·잠금합니다. [전체 계약](.agents/skills/ppt-reference-fidelity/references/com-workflow.md) · [축약 예제](.agents/skills/ppt-reference-fidelity/examples/content_blueprint.example.json)
 
 ```text
-powershell -NoProfile -File <SKILL>/scripts/powerpoint_probe.ps1 -OutputDir <RUN>/capability
-powershell -NoProfile -File <SKILL>/scripts/powerpoint_probe.ps1 -Pptx <REFERENCE> -OutputDir <RUN>/reference-render
-powershell -NoProfile -File <SKILL>/scripts/powerpoint_probe.ps1 -Pptx <CANDIDATE> -OutputDir <RUN>/candidate-render
+python <SKILL>/scripts/com_workflow.py blueprint --work <RUN>
+python <SKILL>/scripts/com_workflow.py lock --work <RUN>
 ```
 
-출력 `snapshot.json`을 각각 reference_powerpoint.json/candidate_powerpoint.json으로 보관하십시오. 원본과 결과는 같은 사용자·PowerPoint 버전·폰트·출력 크기로 측정하십시오. 기본 출력은 1600×900이며 서로 다른 슬라이드 종횡비에서는 왜곡되지 않도록 Width/Height를 같은 비율로 지정하십시오. 스크립트는 원본을 읽기 전용으로 열고 저장하지 않습니다.
+기획 완전성 검사는 창의성 점수가 아닙니다. 실제 시각 표현이 새로운 내용에 맞는지는 이후 사용자 캡처에서 확인해야 합니다.
 
-**현재 실측 지원 경계:** 회전 없는 단독 가로 텍스트 중심입니다. 그룹 내부 변환·회전·표·테마 폰트 해소·자동 글자축소 등의 판정이 불확실하면 NOT REVIEWED로 남겨 strict final을 막습니다. 지원이 안 된다고 원본 그룹을 해제하거나 글꼴·크기를 바꿔 검사만 통과시키지 마십시오. PowerPoint가 없거나 COM이 차단된 경우에도 candidate 제작과 가능한 검사는 계속하되, `제작됨 / 미검증`으로 보고하십시오. LibreOffice 결과를 PowerPoint 실측으로 가장하지 마십시오.
+### 4. COM으로 기존 디자인을 살려 편집
 
-렌더·픽셀 검사는 고해상도 전체 이미지를 **로컬 프로그램이** 처리하므로 GLM에게 두 장을 통째로 전달할 필요가 없습니다. pixel mask는 사전 잠금된 text/image 변경 영역만 허용하며, mask 안쪽의 결함까지 통과했다는 뜻은 아닙니다.
+com_native_manifest.ps1로 원본의 COM-readable 객체·그룹·텍스트·서식을 읽습니다. 원본 bytes를 ZIP으로 읽거나 hash하지 않습니다. 결과 revision은 path/size/mtime metadata로 연결하며 내용 해시보다 약하다는 한계를 남깁니다.
 
-### 5. 비전 도구는 남은 질문에만 사용하십시오
+```text
+powershell -NoProfile -File <SKILL>/scripts/com_native_manifest.ps1 -Pptx <REFERENCE> -Output <RUN>/reference_native.json
+```
 
-보고된 기능: `look_at`, 또는 `call_omo_agent(subagent_type="multimodal-looker")`가 로컬 파일 경로/base64(image_data)를 받아 텍스트로 보고합니다. 별도의 사내 Vision MCP 서버는 없습니다. 회사 실행기에서 실제 노출된 도구 스키마를 확인하십시오. 이 Kit은 해당 도구를 외부에서 직접 실행하는 client가 아닙니다.
+이미 열린 문서 연결이 필요한 환경에서만 -UseOpenPresentation을 확인하여 사용합니다. PowerShell 실행 정책을 우회하지 않습니다. 이 도구는 읽기 전용 manifest 수집기이며 **범용 COM 편집 엔진은 아닙니다.** 에이전트가 실제 지원 API·객체·계획에 맞는 로컬 편집 코드를 작성하고 실행 흔적을 남겨야 합니다.
 
-- 구조/실측/pixel 검사를 이미지 도구의 PASS 한 줄로 대체하지 마십시오.
-- 전체 축소본은 배치·위계만, 상세 영역은 글자·crop·테두리·그림자 등 역할을 나누십시오.
-- 전체 1920×1080 이미지 두 장을 기본 입력으로 고정하지 마십시오. 20만 토큰 전체 한도와 개별 도구 제한은 다릅니다. 실제 토큰 계측·오류를 기록하고 필요한 결함 영역만 조회하십시오.
-- raw 보고서와 입력 이미지 해시는 로컬 증거 파일로 남기고, 대화에는 짧은 발견 요약만 가져오십시오. base64를 대화에 펼치지 마십시오.
-- 불명확·판독 불가·컨텍스트 오류는 NOT REVIEWED입니다. 반복·병렬 호출을 늘려 정확도가 보장된다고 주장하지 마십시오.
+승인된 PowerPoint 동작으로 별도 복사본을 만들고 그 복사본만 수정합니다. 그룹을 해체하거나 모든 도형을 처음부터 재생성하지 않습니다. 혼합 텍스트 서식·문단·사진 종횡비/crop·레이어·효과·연결을 확인합니다. 사진 교체가 필요하면 실제로 새 자산을 넣고 옛 picture가 뒤에 남지 않는지 확인합니다.
 
-[비전 보조 검토](.agents/skills/ppt-reference-fidelity/references/visual-qa.md) · [현재 도구 연결 계약](docs/vision-mcp-setup.md)
+저장 → 닫기 → 재열기 뒤 result_native.json을 수집합니다. visual_implementation.json에 계획한 시각 자료별 실제 구현 대상·새 asset·실행 로그를 연결합니다. 새 asset 파일과 로그가 있다고 삽입 의미까지 자동 증명된 것은 아닙니다.
 
-### 6. 보고하고 작업을 끝내십시오
+현재 프로필에서는 inspect_pptx.py / validate_pptx.py / legacy gate.py / PPT Master ZIP roundtrip / 자동 render/pixel diff를 실행하지 않습니다. 미수행 검사는 NOT_CHECKED_DRM_PROFILE 등으로 보고합니다.
 
-기존 파일 백업 위치, 실제 활성 지침, 새 PPT 경로, 실행한 검사와 실패/미검토를 보고하십시오. `final_receipt.json`이 현재 후보 해시로 모든 gate PASS일 때만 **검증 통과 최종본**으로 전달합니다. 통과하지 못했어도 candidate와 차단 근거는 남겨 사용자가 검토할 수 있게 하십시오. 작업 증거와 회사 PPT를 이 저장소에 push하지 마십시오.
+### 5. 사용자 캡처 → 구체적인 검토 → 수정 → 사용자 수용
 
-## 구현·테스트·경계
+완성된 후보의 revision·슬라이드·필요한 상세 영역을 명시해 캡처를 요청합니다. 캡처가 없으면 시각 QA는 AWAITING_USER_CAPTURE입니다. 원본 대비 판단에는 사용자가 제공한 대응 레퍼런스 캡처도 사용합니다. 전체 축소본에서 작은 글자를 판정하지 않습니다.
 
-- 공통 지침: [AGENTS.md](AGENTS.md), 200줄 이하. 실행기 한도 20만 토큰의 예산·checkpoint 규칙 포함.
-- 로컬 적용/복구: scripts/bootstrap.py. 사내 overlay는 공개 저장소 밖에만 보관.
-- 상위 Skill: .agents/skills/ppt-reference-fidelity/. PPT Master는 별도 엔진으로 유지.
-- 검사: preflight, manifest, 구조 diff, integrity, PowerPoint 측정, layout, pixel diff, 영역 crop, 보조 비전 보고 기록, 순차 gate.
-- 테스트: `python -m unittest discover -s tests/ppt-reference-fidelity -v`. 표준 라이브러리만 검증하려면 `python -S -m unittest ...`를 사용합니다. 이미지 검사는 Pillow가 필요합니다.
-- [이번 검증 결과](docs/validation-report.md)와 [수용 사례](tests/ppt-reference-fidelity/acceptance-cases.md)를 읽으십시오. Windows PowerPoint COM은 이 개발 환경에서 실행 검증하지 못했으며 회사 PC에서 capability/합성 smoke test가 필요합니다.
-- v0.1 receipt와 v0.2 gate를 혼용하지 마십시오. 새 RUN으로 시작하십시오. 회사 read-only 적용은 [company-readonly-setup.md](docs/company-readonly-setup.md)를 참고하십시오.
+look_at / call_omo_agent(subagent_type="multimodal-looker")가 실제 입력을 처리했는지 입력 해시·호출 ID·raw 보고를 남깁니다. 도구가 명백한 결함을 놓치면 신뢰할 수 있는 최종 판정기로 쓰지 않습니다. JSON, checklist, 서브에이전트라는 이름만으로 정확성이 보장되지 않습니다.
 
-공개 저장소에는 일반화된 코드·규칙·합성 테스트만 둡니다. 회사 문서·고객정보·인증정보·실제 시스템 주소는 저장하지 않습니다. 이 Kit은 악의적 증거 조작을 막는 서명 시스템이나 완전한 시각 품질 보증이 아닙니다.
+관찰은 객체/영역 → 보이는 사실 → 기대 기준 → 차이 → 수정 제안으로 작성합니다. 도구의 “이상 없음”과 사용자 수용은 다릅니다. 캡처 업로드·사용자 침묵을 승인으로 취급하지 않습니다.
+
+사용자 지적은 known_issues.json에 OPEN으로 기록합니다. 기존 사진 잔존, 문장만 치환, 캡처 결함 인지 실패 같은 피드백을 “의도된 디자인/취향”으로 반박해 닫지 않습니다. 구체적인 수정과 실제 사용자 확인으로만 해결 처리합니다. 도구 오탐은 사용자가 근거를 들어 수정할 수 있지만, 객관적인 내용/허용 범위 FAIL을 덮을 수는 없습니다.
+
+```text
+python <SKILL>/scripts/com_workflow.py audit --work <RUN>
+```
+
+결과 com_receipt.json은 캡처 대기/사용자 수용 대기/수정 필요/FAIL을 구분합니다. 실제 사용자가 현재 후보와 캡처 세트를 수용한 경우만 USER_ACCEPTED_WITH_LIMITATIONS입니다. ZIP 내부/media bytes/알 수 없는 COM 속성까지 검증 통과했다고 주장하지 않습니다. [캡처 QA 계약](.agents/skills/ppt-reference-fidelity/references/user-capture-qa.md)
+
+## 테스트와 한계
+
+`python -m unittest discover -s tests/ppt-reference-fidelity -v`로 합성 회귀를 실행합니다. `python -S -m unittest ...`는 외부 패키지를 제외한 경로를 검증합니다. 새 COM_USER_CAPTURE의 Python 증거 검사기는 표준 라이브러리만 사용합니다. [검증 기록](docs/validation-report.md)
+
+Windows PowerPoint/DRM/회사 look_at·looker는 이 개발 환경에서 실제 실행하지 못했습니다. 코드를 배포했다는 사실은 회사 COM 동작·이미지 이해·최종 디자인 품질의 보증이 아닙니다. 이전 v0.1/v0.2 RUN과 새 프로필을 혼용하지 않습니다.
+
+일반 비보호 문서에서 패키지 처리가 실제 허용된 경우에만 PACKAGE_NATIVE_LEGACY 경로를 별도로 선택할 수 있습니다. 이 경로의 파일은 삭제하지 않았지만 현재 회사 작업의 기본값이 아닙니다. [프로필 구분](docs/company-readonly-setup.md)
+
+공개 GitHub에는 일반화한 코드·규칙·합성 테스트만 저장합니다. 회사 문서·사진·캡처·주소·인증정보·원문 검토 로그는 회사 허용 로컬 폴더에만 둡니다. 실행기는 200,000토큰 예산에서 필요한 문서만 읽고 대용량 자료는 파일로 처리합니다.

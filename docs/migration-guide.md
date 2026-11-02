@@ -46,3 +46,7 @@ AGENTS.md와 Skill 폴더 전체를 적용합니다. AGENTS만 붙여넣거나 S
 루트 README의 bootstrap-plan.json을 관측된 경로/원본 해시와 검토된 로컬 overlay로 채운 뒤 scripts/bootstrap.py check/apply/verify를 수행합니다. 원본 전체를 먼저 백업·검증한 후 로딩 위치의 중복 Skill을 제거하고 Kit Skill을 복사합니다. AGENTS 파일도 사내 필수 규칙을 보존한 새 내용으로 교체합니다. 기본 파일은 AGENTS.md이며 실제 실행기가 agent.md 같은 다른 이름을 읽는 경우 정확한 기존 경로를 계획에 넣습니다.
 
 읽기 전용 Kit checkout 안의 파일을 회사에서 고치지 않습니다. 비활성화는 별도 백업으로 이동해 자동 스캔 대상에서 제거하는 것이며 폐기가 아닙니다. 경로 확인·충돌 해결을 에이전트가 수행하므로 임의 경로를 추정해 스크립트에 넣지 않습니다. verify는 파일 상태 확인이며 실제 에이전트의 활성 지침 로딩은 instruction_loading.json으로 별도 확인합니다.
+
+## v0.3 프로필 전환
+
+기존 Kit 설치본도 원본 해시를 읽고 새 백업 루트로 bootstrap 갱신합니다. COM_USER_CAPTURE에서 ZIP/XML/자동 export를 실행하도록 강제하는 로컬 구 지침은 역할 충돌입니다. 새 overlay에 그대로 이어 붙이지 않습니다. PPT Master 파일은 유지하지만 이 프로필에서는 로딩/실행 대상으로 쓰지 않습니다. 신규 객체를 무조건 금지하거나 원본 사진을 무조건 유지하는 규칙도 content blueprint와 맞게 정리합니다. 구 RUN/영수증은 새 프로필에 재사용하지 않습니다.

@@ -1,5 +1,7 @@
 # 순차 실행과 증거 계약
 
+> PACKAGE_NATIVE_LEGACY 전용 문서입니다. 현재 DRM/사용자 캡처 작업에는 실행하지 말고 [com-workflow.md](com-workflow.md)를 따르십시오.
+
 ## 경로와 초기화
 
 예시 변수는 실행 환경에서 확인한 실제 경로로 지정합니다. 자료·로그는 Git checkout 밖의 회사 허용 로컬 폴더에 둡니다. `SOURCE`, `CANDIDATE`, `RUN`, `ROUNDTRIP`, `PPT_MASTER_DIR`, `FIDELITY_DIR`가 필요합니다. PowerShell에서는 해당 셸 문법으로 변수를 지정합니다. Python CLI는 동일합니다. Python 3.10+를 사용합니다.
