@@ -60,7 +60,44 @@ class ComProfileTests(unittest.TestCase):
     def ev(self,p):return {'path':str(p),'sha256':c.sha(p)}
     def save(self):
         for name,obj in [('reference_native.json',self.ref),('result_native.json',self.result),('content_blueprint.json',self.plan),('visual_implementation.json',self.impl)]:c.write(self.root/name,obj)
-    def lock(self):c.write(self.root/'plan_lock.json',{'blueprint_sha256':c.sha(self.root/'content_blueprint.json'),'reference_sha256':c.sha(self.root/'reference_native.json')})
+        c.write(self.root/'source_readback.json',self.ref)
+    def consultation(self):
+        c.write(self.root/'reference_analysis.json',{'reference_sha256':c.sha(self.root/'reference_native.json'),
+            'slides':[{'slide':s['slide'],'composition':'Synthetic source composition','useful_patterns':['Frame'],
+                       'adaptation':'Use selected pattern for new topic','unknowns':[]} for s in self.ref['slides']]})
+        c.write(self.root/'material_review.json',{'available':[{'id':'new-source','source_ref':'synthetic','use':'New subject evidence'}],
+            'proposed_use':'New story; replace old photo','questions':[]})
+        confirmation={'confirmed_by':'user','decision':'APPROVED_FOR_EDIT','message_evidence':self.ev(self.log)}
+        for name in ('reference_analysis','material_review','content_blueprint'):
+            confirmation[name+'_sha256']=c.sha(self.root/(name+'.json'))
+        c.write(self.root/'plan_confirmation.json',confirmation)
+    def lock(self):
+        self.consultation()
+        c.write(self.root/'plan_lock.json',{'blueprint_sha256':c.sha(self.root/'content_blueprint.json'),
+            'reference_sha256':c.sha(self.root/'reference_native.json'),'consultation':c.validate_consultation(self.root)})
+        self.units()
+    def units(self):
+        import unit_gate as u
+        # Synthetic stage trace, not real COM execution or user approval.
+        baseline=c.planned_reference(self.ref,self.plan);baseline['identity']=self.result['identity']
+        c.write(self.root/'unit-baseline.json',baseline)
+        old=self.root/'unit_state.json'
+        if old.exists():old.unlink()
+        rows=[]
+        for slide in baseline['slides']:
+            rows.append({'id':'slide-'+str(slide['slide']),'slide':slide['slide'],'purpose':'Synthetic unit',
+                         'targets':[s['key'] for s in slide['shapes']],
+                         'new_shapes':[{'name':s['name'],'bounds':s['geometry'][:4]} for s in self.result['slides'][slide['slide']-1]['shapes'] if 'name' in s and s['key'] not in {x['key'] for x in slide['shapes']}], 'depends_on':[]})
+        c.write(self.root/'unit_plan.json',{'schema':'kit.unit-plan.v1','baseline':self.ev(self.root/'unit-baseline.json'),'units':rows})
+        u.init(self.root)
+        for row in rows:
+            unit=row['id'];analysis=self.root/(unit+'-analysis.json')
+            checks=[{'id':'exists-'+s['key'],'kind':'exists','target':s['key']} for s in self.result['slides'][row['slide']-1]['shapes'] if s['key'] in row['targets']]
+            checks += [{'id':'new-'+n['name'],'kind':'exists','result_name':n['name']} for n in row['new_shapes']]
+            c.write(analysis,{'unit_id':unit,'facts':['Synthetic object reading'],'source_refs':['Synthetic source'],'adaptation':'New subject',
+                             'unknowns':[],'questions':[],'before':self.ev(self.root/'unit-baseline.json'),'checks':checks})
+            u.analyze(self.root,unit,analysis);u.ready(self.root,unit)
+            u.check(self.root,unit,self.root/'result_native.json',self.log)
     def capture(self):
         img=self.root/'user-capture.png';img.write_bytes(b'synthetic capture stand-in; no real review')
         rows=[]
@@ -76,6 +113,53 @@ class ComProfileTests(unittest.TestCase):
             'acknowledged_limitations':True,'message_evidence':self.ev(self.log)})
 
     def test_blueprint(self):self.assertEqual(c.validate_blueprint(self.plan,self.ref)['status'],'PASS')
+    def test_missing_consultation_blocks_lock(self):
+        (self.root/'plan_confirmation.json').unlink();(self.root/'plan_lock.json').unlink()
+        r=subprocess.run([sys.executable,str(SCRIPTS/'com_workflow.py'),'lock','--work',str(self.root)],capture_output=True)
+        self.assertEqual(r.returncode,1);self.assertFalse((self.root/'plan_lock.json').exists())
+    def test_confirmed_plan_can_be_locked_by_cli(self):
+        (self.root/'plan_lock.json').unlink()
+        r=subprocess.run([sys.executable,str(SCRIPTS/'com_workflow.py'),'lock','--work',str(self.root)],capture_output=True)
+        self.assertEqual(r.returncode,0,r.stdout+r.stderr)
+        self.units()
+        self.assertEqual(c.audit(self.root)['status'],'AWAITING_USER_CAPTURE')
+    def test_consultation_is_bound_to_plan(self):
+        confirmation=c.read(self.root/'plan_confirmation.json');confirmation['content_blueprint_sha256']='stale'
+        c.write(self.root/'plan_confirmation.json',confirmation)
+        with self.assertRaises(ValueError):c.audit(self.root)
+    def test_unanswered_material_question_blocks_edit(self):
+        review=c.read(self.root/'material_review.json');review['questions']=[{'question':'Need actual photo?'}]
+        c.write(self.root/'material_review.json',review)
+        with self.assertRaisesRegex(ValueError,'unanswered'):c.validate_consultation(self.root)
+    def test_analysis_must_cover_discarded_source_pages(self):
+        self.ref['slides'].append({'slide':2,'shapes':[]});c.write(self.root/'reference_native.json',self.ref)
+        analysis=c.read(self.root/'reference_analysis.json');analysis['reference_sha256']=c.sha(self.root/'reference_native.json')
+        c.write(self.root/'reference_analysis.json',analysis)
+        with self.assertRaisesRegex(ValueError,'every source slide'):c.validate_consultation(self.root)
+    def test_source_slides_may_be_discarded(self):
+        self.ref['slides'].append({'slide':2,'shapes':[]})
+        self.plan['slides'][0].update(reference_slide=1,adaptation_reason='Only the first pattern fits new content')
+        self.save();self.lock()
+        self.assertEqual(c.audit(self.root)['status'],'AWAITING_USER_CAPTURE')
+    def test_source_pattern_may_be_reordered(self):
+        self.ref['slides'].insert(0,{'slide':1,'shapes':[]});self.ref['slides'][1]['slide']=2
+        self.plan['slides'][0].update(reference_slide=2,adaptation_reason='Lead with relevant evidence pattern')
+        self.save();self.lock();self.assertEqual(c.audit(self.root)['status'],'AWAITING_USER_CAPTURE')
+    def test_extra_empty_result_slide_is_not_invisible(self):
+        self.result['slides'].append({'slide':2,'shapes':[]});self.save()
+        with self.assertRaises(ValueError):c.audit(self.root)
+    def test_repeated_pattern_uses_new_output_indices(self):
+        row=copy.deepcopy(self.plan['slides'][0]);row.update(slide=2,reference_slide=1,adaptation_reason='Repeat useful pattern with new content')
+        self.plan['slides'].append(row);self.plan['slides'][0]['adaptation_reason']='Reuse selected pattern'
+        repeated=c.planned_reference(self.ref,self.plan)
+        self.assertEqual([s['slide'] for s in repeated['slides']],[1,2])
+        self.assertEqual(repeated['slides'][1]['shapes'],self.ref['slides'][0]['shapes'])
+    def test_decoration_reuse_needs_actual_permission(self):
+        self.plan['slides'][0]['classification'][1]['role']='decoration'
+        v=self.plan['slides'][0]['visual_slots'][0];v.update(role='decoration',decision='retain_decoration',decoration_basis='Brand decoration')
+        with self.assertRaises(ValueError):c.validate_blueprint(self.plan,self.ref)
+        v['approval_evidence']=self.ev(self.log)
+        self.assertEqual(c.validate_blueprint(self.plan,self.ref)['status'],'PASS')
     def test_missing_photo_decision_rejected(self):
         self.plan['slides'][0]['visual_slots']=[]
         with self.assertRaises(ValueError):c.validate_blueprint(self.plan,self.ref)
@@ -165,7 +249,7 @@ class ComProfileTests(unittest.TestCase):
         self.result['slides'][0]['shapes'][1]['geometry'][2]=301;self.save()
         with self.assertRaises(ValueError):c.audit(self.root)
     def test_unknown_properties_not_falsely_verified(self):
-        self.result['unreadable_properties']=['SmartArt details'];self.save();self.capture();self.approve()
+        self.result['unreadable_properties']=['SmartArt details'];self.save();self.units();self.capture();self.approve()
         out=c.audit(self.root);self.assertEqual(out['checks']['native_properties'],'PARTIAL')
     def test_unplanned_style_change(self):
         self.result['slides'][0]['shapes'][1]['geometry'][0]=100;self.save()

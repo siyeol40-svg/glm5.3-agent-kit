@@ -5,6 +5,7 @@ import argparse
 import hashlib
 import json
 import math
+import copy
 from pathlib import Path
 
 ROLES={'text','photo','diagram','chart','decoration','logo','container','design_anchor'}
@@ -45,6 +46,7 @@ def validate_manifest(manifest):
 
 
 def validate_blueprint(plan,reference):
+    reference=planned_reference(reference,plan)
     shapes=validate_manifest(reference)
     need(plan.get('schema')=='kit.content-blueprint.v1' and plan.get('locked') is True,'blueprint not locked')
     need(plan.get('reference_revision')==digest(reference['identity']),'blueprint reference mismatch')
@@ -93,6 +95,7 @@ def validate_blueprint(plan,reference):
             elif decision=='retain_decoration':
                 need(visual['role'] in {'decoration','logo'},'old photo/diagram cannot be retained as decoration')
                 need(visual.get('decoration_basis'),'retained design asset needs classification rationale')
+                evidence(visual.get('approval_evidence',{}))
             elif decision=='retain_content_approved':
                 need(visual.get('approval_evidence'),'old substantive visual requires actual user authorization')
                 evidence(visual['approval_evidence'])
@@ -118,6 +121,46 @@ def validate_blueprint(plan,reference):
     return {'status':'PASS','slides':len(plan['slides']),'visual_slots':len(visual_ids)}
 
 
+def planned_reference(reference,plan):
+    """Select/reorder/repeat native source skeletons; do not force whole-deck cloning."""
+    validate_manifest(reference)
+    rows=plan.get('slides',[])
+    need(rows and [s['slide'] for s in rows]==list(range(1,len(rows)+1)), 'invalid output slide roster')
+    selected=[]
+    for row in rows:
+        source=row.get('reference_slide',row['slide'])
+        need(type(source) is int and 1<=source<=len(reference['slides']), 'reference_slide must identify a native source skeleton')
+        if source!=row['slide'] or len(rows)!=len(reference['slides']):
+            need(row.get('adaptation_reason'), 'slide selection/reorder needs an adaptation reason')
+        slide=copy.deepcopy(reference['slides'][source-1]);slide['slide']=row['slide'];selected.append(slide)
+    planned=copy.deepcopy(reference);planned['slides']=selected
+    return planned
+
+
+def validate_consultation(work):
+    """Bind a concrete analysis/material review and actual user confirmation to this plan."""
+    work=Path(work);ref=read(work/'reference_native.json');validate_manifest(ref)
+    analysis=read(work/'reference_analysis.json');materials=read(work/'material_review.json')
+    need(analysis.get('reference_sha256')==sha(work/'reference_native.json'), 'stale reference analysis')
+    rows=analysis.get('slides',[])
+    need([s['slide'] for s in rows]==list(range(1,len(ref['slides'])+1)), 'analyze every source slide before selecting patterns')
+    for row in rows:
+        need(row.get('composition') and row.get('useful_patterns') and row.get('adaptation') and row.get('unknowns') is not None,
+             'reference analysis must describe composition, useful patterns, adaptation and unknowns')
+    need(materials.get('available') and materials.get('proposed_use') and isinstance(materials.get('questions'),list), 'material review incomplete')
+    for item in materials['available']:
+        need(item.get('id') and item.get('source_ref') and item.get('use'), 'available material needs source and planned use')
+    for question in materials['questions']:
+        need(question.get('question') and question.get('resolution') in {'ANSWERED','USER_WAIVED'} and question.get('answer'), 'unanswered production question')
+        evidence(question.get('message_evidence',{}))
+    confirmation=read(work/'plan_confirmation.json')
+    need(confirmation.get('confirmed_by')=='user' and confirmation.get('decision')=='APPROVED_FOR_EDIT', 'user plan confirmation missing')
+    for name in ('reference_analysis','material_review','content_blueprint'):
+        need(confirmation.get(name+'_sha256')==sha(work/(name+'.json')), 'stale consultation: '+name)
+    evidence(confirmation.get('message_evidence',{}))
+    return {name:sha(work/(name+'.json')) for name in ('reference_analysis','material_review','plan_confirmation')}
+
+
 def differences(a,b,path=''):
     if type(a)!=type(b):return [{'path':path,'before':a,'after':b}]
     if isinstance(a,dict):
@@ -134,7 +177,9 @@ def differences(a,b,path=''):
 
 
 def compare_native(reference,result,plan):
+    reference=planned_reference(reference,plan)
     before=validate_manifest(reference);after=validate_manifest(result)
+    need(len(result['slides'])==len(plan['slides']), 'result slide count differs from approved plan')
     # Compare explicit design properties; text strings and derived text bounds are
     # checked separately. Adjacent equivalent font runs are normalized for resegmentation.
     def stable(shape):
@@ -194,7 +239,7 @@ def compare_native(reference,result,plan):
         x,y,w,h=geo[:4];ml,mt,mr,mb=frame[:4];bx,by,bw,bh=bounds;eps=0.5
         if bw<=0 or bh<=0 or bx<x+ml-eps or by<y+mt-eps or bx+bw>x+w-mr+eps or by+bh>y+h-mb+eps:
             text_errors.append(str((page,key))+': native text bounds exceed inner frame')
-        if frame[4]==2:unknown.append(str((page,key))+': effective auto-shrunk font unverified')
+        unknown.append(str((page,key))+': effective rendered font size unavailable; nominal font only')
     return {'schema':'kit.com-diff.v1','status':'FAIL' if unplanned or text_errors else ('PARTIAL' if unknown else 'PASS'),
             'changes':delta,'unplanned':unplanned,'text_errors':text_errors,'unreadable_properties':unknown,
             'scope':'COM-readable object properties only; no ZIP relationships/media-byte inspection'}
@@ -210,10 +255,16 @@ def audit(work):
     plan=read(work/'content_blueprint.json');ref=read(work/'reference_native.json');result=read(work/'result_native.json')
     lock=read(work/'plan_lock.json')
     need(lock['blueprint_sha256']==sha(work/'content_blueprint.json') and lock['reference_sha256']==sha(work/'reference_native.json'), 'plan changed after locking; create a new planned revision')
+    need(lock.get('consultation')==validate_consultation(work), 'consultation changed after locking')
     validate_blueprint(plan,ref);validate_manifest(result)
     need(ref['identity']['path']!=result['identity']['path'],'source must not be overwritten')
     for snapshot in (ref,result):
         need(identity(snapshot['identity']['path'])==snapshot['identity'],'file metadata revision changed; refresh snapshot/captures')
+    import unit_gate
+    source_readback=read(work/'source_readback.json');validate_manifest(source_readback)
+    need(source_readback['identity']['path']==ref['identity']['path'] and
+         unit_gate.projection(source_readback)==unit_gate.projection(ref),'original readable content changed or readback missing')
+    unit_receipt=unit_gate.finish(work)
     caps=read(work/'com_capabilities.json')
     need(caps.get('route')=='COM_USER_CAPTURE','wrong execution profile')
     for operation in ('open','read_objects','create_copy','edit','save','reopen'):
@@ -246,11 +297,12 @@ def audit(work):
     revision=digest(result['identity'])
     receipt={'schema':'kit.com-receipt.v1','status':'AWAITING_USER_CAPTURE','candidate_revision':revision,
              'checks':{'com_operations':'PASS','content_blueprint':'PASS','native_properties':diff['status'],
+                       'unit_loop':unit_receipt['status'],'source_readback':'READABLE_PROPERTIES_MATCH_ONLY',
                        'visual_implementation_trace':'PASS','package_integrity':'NOT_CHECKED_DRM_PROFILE',
                        'automatic_render':'NOT_USED_USER_CAPTURE'},
              'limitations':['Metadata binds the document revision weakly; it is not a byte hash.',
                             'Operation logs and manifests do not prove image meaning or visual quality.',
-                            'User capture provenance/acceptance must be explicit; model opinion is advisory.']}
+                            'User capture provenance/acceptance must be explicit; model opinion is advisory.']+unit_receipt['limitations']}
     issues=read(work/'known_issues.json')
     unresolved=[]
     for issue in issues.get('issues',[]):
@@ -319,8 +371,9 @@ def main():
             print(json.dumps(validate_blueprint(read(work/'content_blueprint.json'),read(work/'reference_native.json')),ensure_ascii=False));return 0
         if a.action=='lock':
             validate_blueprint(read(work/'content_blueprint.json'),read(work/'reference_native.json'))
+            consultation=validate_consultation(work)
             need(not (work/'plan_lock.json').exists(),'lock already exists; keep history and start a new revision')
-            write(work/'plan_lock.json',{'blueprint_sha256':sha(work/'content_blueprint.json'),'reference_sha256':sha(work/'reference_native.json')})
+            write(work/'plan_lock.json',{'blueprint_sha256':sha(work/'content_blueprint.json'),'reference_sha256':sha(work/'reference_native.json'),'consultation':consultation})
             print('LOCKED; not edited or reviewed');return 0
         result=audit(work);write(work/'com_receipt.json',result);print(result['status'])
         return 0 if result['status']=='USER_ACCEPTED_WITH_LIMITATIONS' else 2

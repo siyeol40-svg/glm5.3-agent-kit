@@ -10,6 +10,11 @@ param(
 $ErrorActionPreference='Stop'
 $app=$null;$deck=$null;$ownsApp=$false;$ownsDeck=$false
 $unknown=New-Object 'System.Collections.Generic.List[string]'
+$unknown.Add('master-layout-inheritance-completeness-unverified')
+$unknown.Add('effective-rendered-font-size-unavailable-nominal-only')
+$unknown.Add('image-content-identity-unavailable')
+$unknown.Add('chart-series-values-and-OLE-internals-unverified')
+$unknown.Add('hidden-slide-state-unverified-null-is-not-false')
 $report=[ordered]@{schema='kit.com-manifest.v1';status='FAIL';identity=$null;slides=@();
     slide_size=$null;unreadable_properties=@();errors=@();
     scope='Slide-local objects/groups and readable COM properties; no package/media byte validation'}

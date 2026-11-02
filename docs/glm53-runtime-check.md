@@ -23,3 +23,7 @@
 현재 보고된 look_at / multimodal-looker 활용은 [vision-mcp-setup.md](vision-mcp-setup.md)를 따릅니다. 회사에서 허용되지 않은 외부 endpoint나 개인 API Key로 임의 연결하지 않습니다.
 
 실행기 보고 컨텍스트는 200,000토큰입니다. 1920×1080 두 장의 부담을 이 총량만으로 설명하지 않습니다. tool별 전처리·입력 제한·누적 기록과 실제 토큰 계측을 분리합니다. 읽은 근거는 로컬 파일로 보존하고 대화에는 필요한 객체/결과만 요약합니다. AGENTS의 70%/85% 체크포인트 기준은 계측이 있을 때의 권장 운영선이며 실제 API 옵션을 바꾸지 않습니다.
+
+## 긴 thinking과 무응답 진단
+
+[짧은 단계 실행·중단 복구·PowerShell 인코딩](../.agents/skills/ppt-reference-fidelity/references/short-step-execution.md)을 따릅니다. 52,359자 thinking은 관측값이며 출력 토큰 한도 초과의 확정 증거는 아닙니다. finish_reason·usage·소요 시간·스트림 종료·tool_calls를 수집하고 인코딩 실패는 별도 분리합니다. PPT 콘텐츠 기획 실패와 실행 중단은 서로 독립적으로 고칩니다.

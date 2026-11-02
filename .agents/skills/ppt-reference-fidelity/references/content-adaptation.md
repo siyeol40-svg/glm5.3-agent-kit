@@ -2,11 +2,24 @@
 
 ## 문제 정의
 
-디자인 유지와 콘텐츠 복사는 다릅니다. 좋은 레퍼런스의 카드·프레임·색·정렬은 재사용하되 이전 사업 사진·기술 그림·수치·문장은 새 주제의 근거가 아닙니다. 새 텍스트를 박스에 옮겨 넣는 것만으로 완성하지 않습니다.
+레퍼런스는 활용할 디자인 패턴의 자료입니다. 모든 페이지·카드 수·도형 위치를 그대로 가져오는 것이 기본 목표가 아닙니다. 컬러·서체 위계·정렬 등에서 무엇을 계승하고, 새 내용에 맞춰 무엇을 재구성할지 먼저 정합니다. 이전 사업 사진·기술 그림·수치·문장은 새 주제의 근거가 아닙니다.
 
 ## 편집 전 산출물
 
-각 슬라이드에서 먼저 서로 다른 구체적 시각 접근 2안을 한두 문장씩 비교합니다(visual_options: id/concept/source_refs). selected_option과 selection_reason으로 한 안을 스스로 선택합니다. 사용자가 선택을 요청한 경우 외에는 이 단계마다 사용자 결정을 기다리지 않습니다. 색만 바꾼 두 안이나 형식적인 찬반이 아니라 메시지 전달 방식의 차이를 비교하십시오.
+먼저 원본의 전체 페이지를 분석하고 reference_analysis.json을 만듭니다. reference_sha256은 reference_native.json 파일의 SHA256입니다. slides의 각 항목에 slide/composition/useful_patterns/adaptation/unknowns를 기록합니다. COM으로 확인한 사실과 캡처에서 본 사실을 구분하며, 보지 못한 모습은 unknowns에 남깁니다. 불명확한 구조는 사용자 제공 캡처를 요청합니다.
+
+material_review.json에는 available[{id,source_ref,use}], proposed_use, questions를 기록합니다. 무엇을 가진 자료로 설명할 수 있는지, 무엇이 부족한지, 사진이 꼭 필요한지 아니면 근거 있는 도해로 대체 가능한지 검토합니다. 실제 자료 확인 없이 빈 질문부터 던지지 않습니다.
+
+이후 아래를 짧은 표로 제시하고 편집 전에 사용자에게 묶어 확인합니다. 이는 사용자가 요구한 제작 전 협의이며, 모든 도구 실행에 대한 반복 권한 요청이 아닙니다.
+
+- 원본의 어떤 패턴을 채택/변형/제외할지와 새 페이지 구성.
+- 보유 자료별 활용 위치와 추가로 필요한 자료, 대체안.
+- 그대로 유지하려는 기존 사진·그림·차트·로고/장식의 구체적인 대상과 재사용해도 되는지. 기존의 명시적 포괄 허가가 있으면 그 실제 근거를 연결합니다.
+- 추천 표현과 다른 표현의 차이. 각 페이지 visual_options 2안은 내부 비교 근거이며 사용자에게 매 페이지 두 안을 선택시키지는 않습니다. 추천안과 필요한 결정만 제시합니다.
+
+질문마다 question/resolution(ANSWERED 또는 USER_WAIVED)/answer/message_evidence{path,sha256}를 남깁니다. 사용자가 자료 없이 진행하라고 한 경우에도 실제 사진 대신 사용할 설명용 도해/미완성 표시 등 대안을 명시합니다. 침묵을 허가로 해석하지 않습니다.
+
+확인된 최종 기획에 대해 plan_confirmation.json에 confirmed_by=user, decision=APPROVED_FOR_EDIT, reference_analysis_sha256, material_review_sha256, content_blueprint_sha256, message_evidence{path,sha256}를 기록합니다. 실제 사용자 메시지와 바인딩된 확인이 없으면 lock과 audit는 실패합니다. 파일은 서명된 인증 증거가 아니며 임의로 사용자 승인문을 만들어서는 안 됩니다.
 
 각 슬라이드에 다음을 먼저 적습니다.
 
@@ -14,13 +27,13 @@
 2. audience_takeaway: 독자가 무엇을 이해/판단해야 하는지.
 3. source_refs: 새 자료의 사실 근거.
 4. visual_story: 문장 대신 어떤 관계·대비·과정·메커니즘으로 전달할지.
-5. design_anchors: 유지할 프레임·폰트·색·여백·위계.
+5. design_anchors: 이번에 선택해 계승할 프레임·폰트·색·여백·위계. 원본의 모든 요소를 고정하지 않습니다.
 6. classification: COM 재귀 shape 전체의 text/photo/diagram/chart/decoration/logo/container/design_anchor 역할과 이유.
 7. visual_slots: 각 시각 콘텐츠의 결정·새 컨셉·구현 방식·확인 기준.
 8. text_slots: 기존 객체와 새 expected_text/출처.
 9. capture_regions: 전체 overview와 제목·카드·핵심 시각 자료의 detail 요청 영역.
 
-공간의 고정과 콘텐츠의 자유를 함께 설계합니다. 필요한 새 도해 객체는 native change allowance에 넣으십시오. 무관한 전체 레이아웃 재디자인을 하지 않고도 내용에 맞는 창작이 가능합니다.
+페이지별 reference_slide로 가져올 원본 skeleton을 선택합니다. 출력 slide는 1부터 연속이며 원본 페이지 제외/순서 변경/중복 활용이 가능합니다. 이런 경우 adaptation_reason이 필수입니다. 선택한 페이지의 모든 객체를 분류하여 유지/교체/삭제를 결정하되, 필요 없는 원본 콘텐츠를 억지로 채우지 않습니다. 새 좌표·카드 수·영역 변경은 이유와 exact native allowance로 사전에 선언합니다. 새 객체는 native_policy로 범위를 정합니다. 현재 검사기는 reference_slide 없이 완전히 빈 페이지에서 시작하는 경로는 지원하지 않습니다.
 
 ## 시각 자료 결정
 
@@ -29,7 +42,7 @@
 | replace | 새 주제의 실제 사진/새 자산으로 교체; 사진 출처와 의미 기록 |
 | rebuild | 새 자료의 흐름·관계를 native 도형 등으로 새로 구성 |
 | create | 기존 콘텐츠에 없던 설명 시각 자료를 지정된 영역에 추가 |
-| retain_decoration | 로고/브랜드 장식처럼 내용과 무관한 디자인 자산; 분류 근거 필수 |
+| retain_decoration | 로고/브랜드 장식처럼 내용과 무관한 자산; 분류 근거와 실제 사용자 재사용 허가 필수 |
 | retain_content_approved | 기존 사진/그림이 새 주제에도 실제 맞고 사용자가 유지 승인한 근거가 있음 |
 | remove | 정보 기능이 없거나 새 자료에 맞지 않아 삭제; 관련 구조 변화 기록 |
 

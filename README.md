@@ -1,4 +1,4 @@
-# GLM-5.3 Agent Kit · v0.3
+# GLM-5.3 Agent Kit · v0.4
 
 **이 README를 회사 에이전트에게 전달하면 로컬 지침을 백업·갱신하고, 원본 디자인 문법을 살리면서 새 내용·사진·도해를 기획하여 PPT를 재제작하는 진입점입니다.** README 열람만으로 프로그램이 실행되지는 않으며, 에이전트가 아래 지침과 필요한 저장소 파일을 읽고 실행합니다.
 
@@ -58,16 +58,16 @@ python <KIT>/scripts/bootstrap.py verify <BACKUP>/receipt.json
 
 설치된 SKILL.md → references/com-workflow.md → com-precautions.md → content-adaptation.md 순으로 현재 단계의 문서만 읽습니다. ZIP/자동 렌더 기반 legacy 문서는 이 프로필에 로딩하지 않습니다.
 
-각 페이지의 핵심 메시지·독자 이해 목표·사실 출처·시각 표현을 먼저 기획합니다. 구체적인 시각 표현 2안을 짧게 비교한 뒤 자료와 원본 문법에 맞는 안을 스스로 선택하고 이유를 남깁니다. 형식적인 색상 변형이나 사용자 선택 대기를 기본값으로 하지 않습니다. COM의 재귀 객체 목록을 기준으로 원본의 **모든 사진·그림·차트**에 교체/재구성/추가/장식 유지/사용자 승인 유지/삭제 결정을 적습니다.
+먼저 레퍼런스 전체를 분석하고 보유 자료에서 활용할 점·부족한 자료를 검토합니다. 원본의 모든 구조를 복제하지 말고 채택/변형/제외할 패턴을 고릅니다. 추천 페이지 구성·자료 활용안·부족한 자료와 대안·그대로 재사용할 사진/그림/로고를 짧은 표로 제시하고 사용자에게 한 번에 확인합니다. 기존 자료 재사용은 실제 허가가 필요하며 침묵은 허가가 아닙니다. 각 페이지의 표현 2안을 내부 비교해 추천하되 모든 페이지에서 선택을 반복 요구하지 않습니다. COM의 재귀 객체 목록을 기준으로 원본의 **모든 사진·그림·차트**에 교체/재구성/추가/장식 유지/사용자 승인 유지/삭제 결정을 적습니다.
 
-- 디자인 앵커: 컬러, 폰트 위계, 제목 위치, 프레임, 여백, 선·그림자·정렬 문법.
+- 선택해 계승할 디자인 앵커(모두 고정하지 않음): 컬러, 폰트 위계, 제목 위치, 프레임, 여백, 선·그림자·정렬 문법.
 - 새로 구성할 콘텐츠: 메시지, 설명 순서, 새 사진의 대상, 관계/과정/대비 도해, 데이터 표현.
 - 기존 사업 사진·기술 그림을 “스타일 유지”라는 이유로 그대로 쓰지 않습니다. 내용이 있는 사진/그림을 장식으로 재분류해 남기지 않습니다.
 - 새 사진이 없으면 기존 사진으로 메우지 않습니다. 실제 사진이 필수면 자료를 요청하고 미완성으로 남깁니다. 개념 설명이면 새 자료의 관계를 native 도형으로 시각화할 수 있습니다.
 - 사진 슬롯과 하단 기술 도해 역할을 지킵니다. 필요한 역할 변경/새 객체는 기획에 명시하고 원본 디자인 문법 안에서 구성합니다.
 - “새롭게/창의적으로” 같은 추상적 지시로 끝내지 않고 각 시각 자료의 새 컨셉·구현 방법·확인 기준을 적습니다. 생성 이미지·가상 수치를 실제 현장이나 실적으로 제시하지 않습니다.
 
-content_blueprint.json을 작성하고 검사·잠금합니다. [전체 계약](.agents/skills/ppt-reference-fidelity/references/com-workflow.md) · [축약 예제](.agents/skills/ppt-reference-fidelity/examples/content_blueprint.example.json)
+reference_analysis.json → material_review.json → content_blueprint.json을 준비하고 실제 사용자 확인을 plan_confirmation.json에 연결한 뒤 검사·잠금합니다. 확인 전에는 편집하지 않습니다. 출력 페이지마다 reference_slide로 원본 패턴을 선택해 제외/재배열/반복 활용할 수 있고 구조 변경은 이유와 허용 범위를 선언합니다. 구버전의 전체 페이지 수 고정 제약은 적용하지 않습니다. [전체 계약](.agents/skills/ppt-reference-fidelity/references/com-workflow.md) · [축약 예제](.agents/skills/ppt-reference-fidelity/examples/content_blueprint.example.json)
 
 ```text
 python <SKILL>/scripts/com_workflow.py blueprint --work <RUN>
@@ -76,7 +76,9 @@ python <SKILL>/scripts/com_workflow.py lock --work <RUN>
 
 기획 완전성 검사는 창의성 점수가 아닙니다. 실제 시각 표현이 새로운 내용에 맞는지는 이후 사용자 캡처에서 확인해야 합니다.
 
-### 4. COM으로 기존 디자인을 살려 편집
+### 4. 짧은 단계로 COM 편집
+
+[짧은 단계 실행](.agents/skills/ppt-reference-fidelity/references/short-step-execution.md)을 따릅니다. 의존 도구 한 번 → 결과 확인 → 1~3문장 상태 보고 → 다음 단계로 진행합니다. 성공할 때마다 사용자 답변을 기다리지는 않습니다. 스크립트는 파일에 작게 작성·구문 확인하고 한 페이지씩 실행합니다. 중단 시 checkpoint와 실제 COM 상태를 확인하여 중복 삽입·재실행을 막습니다. 짧은 회신만으로 내부 thinking 한도나 실행기 타임아웃이 바뀌지는 않습니다.
 
 com_native_manifest.ps1로 원본의 COM-readable 객체·그룹·텍스트·서식을 읽습니다. 원본 bytes를 ZIP으로 읽거나 hash하지 않습니다. 결과 revision은 path/size/mtime metadata로 연결하며 내용 해시보다 약하다는 한계를 남깁니다.
 
@@ -86,9 +88,15 @@ powershell -NoProfile -File <SKILL>/scripts/com_native_manifest.ps1 -Pptx <REFER
 
 이미 열린 문서 연결이 필요한 환경에서만 -UseOpenPresentation을 확인하여 사용합니다. PowerShell 실행 정책을 우회하지 않습니다. 이 도구는 읽기 전용 manifest 수집기이며 **범용 COM 편집 엔진은 아닙니다.** 에이전트가 실제 지원 API·객체·계획에 맞는 로컬 편집 코드를 작성하고 실행 흔적을 남겨야 합니다.
 
+전체 기획을 확인한 다음 [요소별 필수 반복 계약](.agents/skills/ppt-reference-fidelity/references/unit-workflow.md)을 따릅니다. 의미 있는 카드/제목/도해 단위로 분석 → 질문 → READY → 적용 → 실제 재조회 QA를 반복합니다. 편집 전 질문을 해결하고, 필수 검사 실패 시 다음 의존 편집을 차단합니다. 준비 파일과 명령 예제는 해당 계약에 있습니다. 단순히 단계 이름을 보고하는 것으로 대체하지 않습니다.
+
+unit_gate.py init/analyze/ready/check/finish는 로컬 검사와 편집 허가를 기록합니다. 기존 com_workflow.py audit도 모든 unit 완료를 요구합니다. 수정 시 invalidate로 이력과 의존 검사를 보존·무효화합니다. OS 차원의 COM 차단 장치는 아니므로 에이전트가 READY를 확인한 뒤에만 편집해야 합니다.
+
+[사내 관측 한계](.agents/skills/ppt-reference-fidelity/references/nonvisual-capabilities.md): 원본 readback은 읽힌 내용만 비교하며 hash가 아닙니다. master/placeholder 일부 조회와 Layout_count=0은 상속 완전성 증거가 아닙니다. 실효 축소 글자 크기, 사진 내용 동일성, 차트/OLE 내부, null인 숨김 상태는 미확인으로 유지합니다.
+
 승인된 PowerPoint 동작으로 별도 복사본을 만들고 그 복사본만 수정합니다. 그룹을 해체하거나 모든 도형을 처음부터 재생성하지 않습니다. 혼합 텍스트 서식·문단·사진 종횡비/crop·레이어·효과·연결을 확인합니다. 사진 교체가 필요하면 실제로 새 자산을 넣고 옛 picture가 뒤에 남지 않는지 확인합니다.
 
-저장 → 닫기 → 재열기 뒤 result_native.json을 수집합니다. visual_implementation.json에 계획한 시각 자료별 실제 구현 대상·새 asset·실행 로그를 연결합니다. 새 asset 파일과 로그가 있다고 삽입 의미까지 자동 증명된 것은 아닙니다.
+저장 → 닫기 → 재열기 뒤 result_native.json을 수집하고 원본도 다시 읽어 source_readback.json을 남깁니다. 전체 내용/차이 비교는 요소별 검사 후에도 수행합니다. visual_implementation.json에 계획한 시각 자료별 실제 구현 대상·새 asset·실행 로그를 연결합니다. 새 asset 파일과 로그가 있다고 삽입 의미까지 자동 증명된 것은 아닙니다.
 
 현재 프로필에서는 inspect_pptx.py / validate_pptx.py / legacy gate.py / PPT Master ZIP roundtrip / 자동 render/pixel diff를 실행하지 않습니다. 미수행 검사는 NOT_CHECKED_DRM_PROFILE 등으로 보고합니다.
 
@@ -112,7 +120,7 @@ python <SKILL>/scripts/com_workflow.py audit --work <RUN>
 
 `python -m unittest discover -s tests/ppt-reference-fidelity -v`로 합성 회귀를 실행합니다. `python -S -m unittest ...`는 외부 패키지를 제외한 경로를 검증합니다. 새 COM_USER_CAPTURE의 Python 증거 검사기는 표준 라이브러리만 사용합니다. [검증 기록](docs/validation-report.md)
 
-Windows PowerPoint/DRM/회사 look_at·looker는 이 개발 환경에서 실제 실행하지 못했습니다. 코드를 배포했다는 사실은 회사 COM 동작·이미지 이해·최종 디자인 품질의 보증이 아닙니다. 이전 v0.1/v0.2 RUN과 새 프로필을 혼용하지 않습니다.
+Windows PowerPoint/DRM/회사 look_at·looker는 이 개발 환경에서 실제 실행하지 못했습니다. 코드를 배포했다는 사실은 회사 COM 동작·이미지 이해·최종 디자인 품질의 보증이 아닙니다. v0.4는 제작 전 실제 사용자 확인을 새로 요구합니다. 이전 RUN을 그대로 통과시키지 말고 분석·기획·확인 증거를 준비한 새 revision을 사용합니다.
 
 일반 비보호 문서에서 패키지 처리가 실제 허용된 경우에만 PACKAGE_NATIVE_LEGACY 경로를 별도로 선택할 수 있습니다. 이 경로의 파일은 삭제하지 않았지만 현재 회사 작업의 기본값이 아닙니다. [프로필 구분](docs/company-readonly-setup.md)
 
