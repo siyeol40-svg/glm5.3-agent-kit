@@ -20,7 +20,7 @@ def probe(code):
 def preflight(master=None, visual_reviewer=None):
     modules = {m: probe('import '+m+'; print(getattr('+m+', "__version__", "stdlib"))')
                for m in ('zipfile', 'xml.etree.ElementTree', 'pptx', 'lxml', 'PIL')}
-    executables = {k: shutil.which(k) for k in ('libreoffice', 'soffice', 'pdftoppm')}
+    executables = {k: shutil.which(k) for k in ('libreoffice', 'soffice', 'pdftoppm', 'powershell', 'pwsh')}
     required = ['attribution_guard.py','pptx_to_svg.py','svg_to_pptx.py',
                 'svg_authoring_view.py','svg_quality_checker.py','pptx_delivery_check.py']
     master_files = {}
@@ -34,14 +34,18 @@ def preflight(master=None, visual_reviewer=None):
         docs = False
     ready = docs and all(x['exists'] for x in master_files.values())
     return {'schema': 'kit.preflight.v1', 'status': 'PASS' if ready else 'FAIL',
-            'python': platform.python_version(), 'imports': modules, 'executables': executables,
+            'python': platform.python_version(), 'os': platform.system(),
+            'context_budget_reported': 200000,
+            'native_probe': str(Path(__file__).with_name('powerpoint_probe.ps1').resolve()), 'imports': modules, 'executables': executables,
             'ppt_master': str(Path(master).resolve()) if master else None, 'master_files': master_files,
             'visual_reviewer': visual_reviewer, 'render_ready': bool(executables['pdftoppm'] and
                    (executables['libreoffice'] or executables['soffice'])),
             'notes': ['PASS means inventory completed with engine files present, not engine execution proven.',
                       'Run the upstream attribution guard before importing. Do not bypass failures.',
                       'Missing optional imports require an explicit alternative path.',
-                      'No image reviewer means visual QA remains NOT REVIEWED.']}
+                      'Run powerpoint_probe.ps1 in the actual Windows desktop session; command presence is not COM readiness.',
+                      'Image-tool limits differ from the reported total 200000-token context budget.',
+                      'No image reviewer means residual visual QA remains NOT REVIEWED.']}
 
 
 def main():

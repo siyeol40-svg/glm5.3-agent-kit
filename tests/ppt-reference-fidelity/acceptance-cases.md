@@ -45,3 +45,16 @@ fixture는 테스트 중 임시 ZIP/XML/이미지로 생성·폐기합니다. �
 - 새 Kit이 작동해도 사내 전용 명령·규칙이 보존되는가.
 
 검사하지 않은 E2E 항목은 미검증으로 기록합니다. 자동 테스트 수를 시각 품질 점수로 해석하지 않습니다.
+
+## v0.2 추가 수용
+
+- README 진입점에서 로컬 bootstrap 계획 검사·백업·적용·verify·rollback을 실제 실행합니다.
+- 원본 AGENTS 해시가 바뀌면 적용하지 않고, 적용 후 수동 변경이 있으면 rollback이 덮어쓰지 않습니다.
+- 사내 공통/범위별 overlay를 보존하고 ppt-master 자체를 비활성화하지 않습니다.
+- 파일 적용 성공과 실제 지침 로딩을 구분하며 loading 근거가 없으면 preflight gate를 차단합니다.
+- layout checker는 overflow를 FAIL, 그룹/회전/폰트/자동축소 등 확인 불가를 NOT REVIEWED로 처리합니다.
+- pixel diff는 렌더 환경·슬라이드·해시가 다르면 FAIL합니다. 승인 mask 밖 변경과 과도한 mask를 검출합니다.
+- 전체 preview는 overview 3항목, 상세 영역은 10항목으로 검사하고 작은 글자를 전체 thumbnail에서 판정하지 않습니다.
+- look_at/looker raw 보고가 불명확하거나 자연어뿐이면 모든 항목 PASS로 임의 복제하지 않습니다.
+- 총 200,000토큰과 개별 이미지 도구의 제한을 구분합니다. 계측 없이 정확한 잔여량을 주장하지 않습니다.
+- Windows PowerPoint probe는 대상 환경에서 실제 실행해야 합니다. 합성 snapshot 테스트는 COM E2E가 아닙니다.

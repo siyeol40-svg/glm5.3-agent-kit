@@ -6,15 +6,17 @@ from common import read, write, sha, digest, emit, cli_error
 from inspect_pptx import inspect
 from compare_manifests import compare
 from validate_pptx import validate
-from render_regions import CHECKS
+from render_regions import required_checks
 
 STAGES = ['preflight','route','authority','reference','mapping','edit','structural',
-          'integrity','render','visual']
-FILES = {'preflight': ['preflight.json'], 'route': ['route.json'],
+          'integrity','layout','render','pixels','visual']
+FILES = {'preflight': ['preflight.json','instruction_loading.json'], 'route': ['route.json'],
          'authority': ['authority_contract.json'], 'reference': ['reference_manifest.json'],
          'mapping': ['content_mapping.json'], 'edit': ['edit_evidence.json'],
          'structural': ['result_manifest.json','structural_diff.json'],
-         'integrity': ['package_integrity.json'], 'render': ['render_evidence.json','region_plan.json'],
+         'integrity': ['package_integrity.json'],
+         'layout': ['candidate_powerpoint.json','layout_check.json'],
+         'pixels': ['reference_powerpoint.json','pixel_diff.json'], 'render': ['render_evidence.json','region_plan.json'],
          'visual': ['visual_qa.json']}
 
 
@@ -55,6 +57,25 @@ def verify_stage(stage, work, source, candidate):
     get = lambda n: read(work/n)
     h = sha(candidate) if candidate.exists() else None
     if stage == 'preflight':
+        loading=get('instruction_loading.json')
+        ensure(loading.get('schema')=='kit.loading.v1' and loading.get('status')=='PASS','instruction loading not verified')
+        ensure(loading.get('active_files') and loading.get('evidence'), 'missing loading evidence')
+        for entry in loading['active_files']+[loading['evidence']]:
+            ensure(sha(entry['path'])==entry['sha256'],'active instruction/loading log changed')
+        br=loading.get('bootstrap_receipt',{})
+        ensure(br and sha(br['path'])==br['sha256'],'missing/stale bootstrap receipt')
+        receipt=read(br['path'])
+        ensure(receipt.get('schema')=='kit.bootstrap-receipt.v1' and receipt.get('status')=='APPLIED' and receipt.get('entries'), 'bootstrap not applied')
+        for entry in receipt['entries']:
+            path=Path(entry['path'])
+            if entry['after'] is None:
+                ensure(not path.exists(),'disabled Skill became active again')
+            elif path.is_file():
+                ensure(entry['after']=={'':sha(path)},'installed instruction changed')
+            else:
+                ensure(path.is_dir(),'installed Skill missing')
+                actual={str(f.relative_to(path)):sha(f) for f in path.rglob('*') if f.is_file() and '__pycache__' not in f.parts}
+                ensure(actual==entry['after'],'installed Skill files changed')
         d = get('preflight.json')
         ensure(d.get('schema') == 'kit.preflight.v1' and d.get('status') == 'PASS', 'preflight not PASS')
         ensure(d.get('ppt_master') and d.get('master_files'), 'missing engine inventory')
@@ -112,6 +133,17 @@ def verify_stage(stage, work, source, candidate):
     elif stage == 'integrity':
         actual = validate(candidate)
         ensure(actual['status'] == 'PASS' and get('package_integrity.json') == actual, 'integrity validation failed')
+    elif stage == 'layout':
+        from layout_check import check_layout
+        actual=check_layout(get('candidate_powerpoint.json'),get('result_manifest.json'),candidate)
+        ensure(actual['status']=='PASS' and get('layout_check.json')==actual, 'native layout check failed or NOT REVIEWED')
+    elif stage == 'pixels':
+        from pixel_diff import compare_pixels
+        reference=get('reference_powerpoint.json'); result=get('candidate_powerpoint.json')
+        ensure(reference.get('status')=='PASS' and result.get('status')=='PASS', 'native render snapshots incomplete')
+        ensure(reference.get('artifact_sha256')==sha(source) and result.get('artifact_sha256')==h,'stale native render')
+        actual=compare_pixels(reference,result,get('content_mapping.json'))
+        ensure(actual['status']=='PASS' and get('pixel_diff.json')==actual,'pixel comparison failed')
     elif stage == 'render':
         d, plan = get('render_evidence.json'), get('region_plan.json')
         ensure(d.get('artifact_sha256') == h and plan.get('artifact_sha256') == h, 'stale render')
@@ -119,6 +151,9 @@ def verify_stage(stage, work, source, candidate):
         ensure(sha(d['log']['path']) == d['log']['sha256'], 'render log changed')
         ensure(len(plan.get('slides', [])) == len(inspect(candidate)['slides']), 'render slide coverage mismatch')
         ensure([s['slide'] for s in plan['slides']] == list(range(1, len(plan['slides'])+1)), 'render roster invalid')
+        native=get('candidate_powerpoint.json')
+        ensure([(s['slide'],s['image'],s['image_sha256']) for s in plan['slides']] ==
+               [(s['slide'],s['image'],s['image_sha256']) for s in native['slides']], 'render is not native candidate snapshot')
         actual_regions = []
         for slide in plan['slides']:
             ensure(sha(slide['image']) == slide['image_sha256'], 'render image changed')
@@ -127,7 +162,7 @@ def verify_stage(stage, work, source, candidate):
     elif stage == 'visual':
         from PIL import Image, ImageChops
         d, plan = get('visual_qa.json'), get('region_plan.json')
-        ensure(d.get('status') == 'PASS' and d.get('artifact_sha256') == h, 'visual QA not PASS/current')
+        ensure(d.get('schema') == 'kit.visual.v2' and d.get('status') == 'PASS' and d.get('artifact_sha256') == h, 'visual QA not PASS/current')
         ensure(d.get('region_plan_sha256') == digest(plan), 'visual QA region plan mismatch')
         expected = {r['id']: (s,r) for s in plan['slides'] for r in s['regions']}
         rows = d.get('regions', [])
@@ -135,10 +170,13 @@ def verify_stage(stage, work, source, candidate):
         for row in rows:
             s, r = expected[row['id']]
             ensure(row['status'] == 'PASS' and row.get('reviewer') and row.get('notes'), 'unreviewed region')
-            ensure(set(row.get('checks', {})) == set(CHECKS) and all(v == 'PASS' for v in row['checks'].values()),
+            ensure(set(row.get('checks', {})) == set(required_checks(r)) and all(v == 'PASS' for v in row['checks'].values()),
                    'incomplete visual checks')
             ensure(row['box'] == r['box'] and row['slide'] == s['slide'], 'QA region identity changed')
             ensure(sha(row['image']) == row['image_sha256'] and sha(s['image']) == row['source_sha256'], 'stale QA image')
+            if row['reviewer'] in ('look_at', 'call_omo_agent:multimodal-looker'):
+                from visual_review import verify_evidence
+                verify_evidence(row, d, get('content_mapping.json'))
             with Image.open(s['image']) as image, Image.open(row['image']) as crop:
                 x0,y0,x1,y1 = r['box']
                 ensure(0 <= x0 < x1 <= image.width and 0 <= y0 < y1 <= image.height, 'QA bounds invalid')

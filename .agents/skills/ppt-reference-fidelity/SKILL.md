@@ -11,15 +11,17 @@ description: 기존 PPTX에 새 콘텐츠를 넣으면서 원본 디자인, 객�
 
 이 Skill의 실제 절대 경로를 `FIDELITY_DIR`, 설치된 PPT Master의 실제 절대 경로를 `PPT_MASTER_DIR`로 사용하십시오. 경로를 추정하지 마십시오.
 
-1. [workflow.md](references/workflow.md)에서 실행 명령과 증거 형식을 읽으십시오.
-2. [ppt-master-routing.md](references/ppt-master-routing.md)와 설치된 엔진의 `SKILL.md`, `workflows/routing.md`, `workflows/edit-native-pptx.md`를 읽으십시오. 엔진의 attribution guard가 실패하면 중단하십시오.
-3. [content-authority.md](references/content-authority.md), [content-mapping.md](references/content-mapping.md)를 읽고 자료와 슬롯을 고정하십시오.
-4. [pptx-integrity.md](references/pptx-integrity.md), [visual-qa.md](references/visual-qa.md)에서 자동 검사 범위와 시각 검토 조건을 확인하십시오.
-5. [failure-patterns.md](references/failure-patterns.md)에서 이번 작업에 해당하는 회귀 조건을 확인하십시오.
+1. [workflow.md](references/workflow.md)의 현재 단계와 실행 계약을 먼저 읽으십시오.
+2. route 단계에 [ppt-master-routing.md](references/ppt-master-routing.md)와 실제 엔진의 SKILL/routing/edit-native 문서만 읽으십시오. guard 실패를 우회하지 마십시오.
+3. 계획 시 [content-authority.md](references/content-authority.md), [content-mapping.md](references/content-mapping.md)를 읽으십시오.
+4. 구조 검사 시 [pptx-integrity.md](references/pptx-integrity.md), native 측정 시 [native-validation.md](references/native-validation.md)를 읽으십시오.
+5. 잔여 시각 검토에만 [visual-qa.md](references/visual-qa.md)를 읽으십시오. 관련 실패가 있으면 [failure-patterns.md](references/failure-patterns.md)의 해당 항목을 확인하십시오.
+
+전체 XML·manifest·base64와 모든 참조 문서를 한 번에 대화에 출력하지 마십시오. 도구로 필요한 부분을 조회하고 로컬 증거 파일을 유지하십시오. 200,000토큰 실행기 예산과 각 이미지 도구의 입력 제한은 별개입니다.
 
 ## 고정 순서
 
-`Preflight → Route Selection → Reference Authority Contract → Reference Manifest → Content Mapping Lock → Source-Preserving Edit → Structural Validation → PPTX Package Integrity → Full-slide Render → Region-by-region Visual QA → Final Delivery`
+`Preflight → Route Selection → Reference Authority Contract → Reference Manifest → Content Mapping Lock → Source-Preserving Edit → Structural Validation → PPTX Package Integrity → Native Layout Check → Native Render Evidence → Unchanged-region Pixel Diff → Residual Visual QA → Final Delivery`
 
 각 단계 파일을 만든 후 `scripts/gate.py advance --stage <stage>`를 실행하십시오. 이전 단계가 없거나 FAIL이면 다음 단계로 진입하지 마십시오. `gate.py finalize`가 현재 candidate 해시로 PASS 영수증을 생성하기 전에는 최종본으로 배포하지 마십시오. 파일이 존재한다는 사실만으로 통과시키지 마십시오.
 
@@ -40,7 +42,7 @@ description: 기존 PPTX에 새 콘텐츠를 넣으면서 원본 디자인, 객�
 - 새 자료만 사실 근거로 사용하십시오. 레퍼런스의 기존 숫자·기관명·문장을 새 사실로 사용하지 마십시오.
 - Mapping Lock의 정확한 before/after 허용 목록 외 구조 차이는 FAIL입니다. 결과를 본 뒤 차이를 일괄 허용하지 마십시오.
 - 매핑·입력·candidate가 바뀌면 `gate.py invalidate --stage ... --reason ...`로 영향 단계부터 재실행하십시오.
-- 전체 슬라이드와 제목·각 카드·하단 도해의 확대 이미지를 모두 검토하십시오. 검토하지 않은 항목은 `NOT REVIEWED`입니다.
+- 객체·native layout·픽셀 검사를 먼저 수행하십시오. 전체 축소본은 배치/위계만 확인하고, 제목·각 카드·하단 도해의 상세 영역에서 남은 결함을 검토하십시오. 검토하지 않은 항목은 `NOT REVIEWED`입니다.
 - GLM-5.3의 텍스트 입력만으로 이미지 QA를 했다고 주장하지 마십시오. 실제 사람 또는 관측 가능한 이미지 분석 도구가 필요합니다.
 - 검사 실패·렌더 불가·이미지 검토 수단 부재 시 candidate와 진단만 보고하십시오. 모든 상태를 PASS로 채워 넣지 마십시오.
 - 이 도구는 협조적인 실행자의 실수를 막는 로컬 검증입니다. 조작 불가능한 증명이나 시각적 완벽성을 보장하지 않습니다.

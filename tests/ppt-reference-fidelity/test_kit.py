@@ -208,7 +208,7 @@ class ImageTests(unittest.TestCase):
         with self.assertRaises(ValueError): verify_stage('visual',self.root,self.source,self.result)
         qa['status']='PASS'
         for r in qa['regions']:
-            r.update(status='PASS',reviewer='synthetic-test-human',notes='Synthetic white image only; not a real PPT review.',checks={k:'PASS' for k in CHECKS})
+            r.update(status='PASS',reviewer='synthetic-test-human',notes='Synthetic white image only; not a real PPT review.',checks={k:'PASS' for k in r['checks']})
         write(self.root/'visual_qa.json',qa); verify_stage('visual',self.root,self.source,self.result)
         qa['regions'][1]['checks']['text_clipping']='NOT REVIEWED'
         write(self.root/'visual_qa.json',qa)
@@ -235,6 +235,14 @@ class ImageTests(unittest.TestCase):
         write(run/'preflight.json',{'schema':'kit.preflight.v1','status':'PASS','ppt_master':str(master),
               'master_files':{'synthetic-protocol-marker.py':{'exists':True,'sha256':sha(enginefile)}},
               'imports':{k:{'status':'PASS'} for k in ('zipfile','xml.etree.ElementTree')}})
+        loadinglog=run/'loading.log';loadinglog.write_text('SYNTHETIC loading evidence; not an actual engine observation')
+        receipt=run/'bootstrap-receipt.json'
+        write(receipt,{'schema':'kit.bootstrap-receipt.v1','status':'APPLIED',
+                      'entries':[{'path':str(enginefile),'after':{'':sha(enginefile)}}]})
+        write(run/'instruction_loading.json',{'schema':'kit.loading.v1','status':'PASS',
+              'active_files':[{'path':str(enginefile),'sha256':sha(enginefile)}],
+              'evidence':{'path':str(loadinglog),'sha256':sha(loadinglog)},
+              'bootstrap_receipt':{'path':str(receipt),'sha256':sha(receipt)}})
         write(run/'route.json',{'route':'Edit Native PPTX','reason':'synthetic protocol test'})
         write(run/'authority_contract.json',{'design_sha256':sha(self.source),'facts':[{'path':str(facts),'sha256':sha(facts)}]})
         write(run/'reference_manifest.json',ref); write(run/'content_mapping.json',mapping)
@@ -252,6 +260,17 @@ class ImageTests(unittest.TestCase):
               'command':'synthetic-test-only','exit_code':0,'log':{'path':str(log),'sha256':sha(log)}})
         plan={'artifact_sha256':sha(self.result),'slides':[{'slide':1,'image':str(image),'image_sha256':sha(image),
               'regions':[{k:v for k,v in r.items() if k!='slide'} for r in regions]}]}
+        snapshot={'schema':'kit.powerpoint-snapshot.v1','status':'PASS','artifact_sha256':sha(self.result),
+                  'renderer':'synthetic-protocol-only','environment':{'test':True},'errors':[],
+                  'slides':[{k:v for k,v in plan['slides'][0].items() if k!='regions'}],
+                  'text_shapes':[{'slide':1,'key':'shape-2/shape-3/shape-4','text':'SYNTHETIC OLD','supported':True,
+                                  'inner_box':[0,0,100,50],'text_bounds':[1,1,50,20],'auto_size':0,'font_available':True}]}
+        write(run/'candidate_powerpoint.json',snapshot)
+        write(run/'reference_powerpoint.json',snapshot)
+        from layout_check import check_layout
+        from pixel_diff import compare_pixels
+        write(run/'layout_check.json',check_layout(snapshot,inspect(self.result),self.result))
+        write(run/'pixel_diff.json',compare_pixels(snapshot,snapshot,mapping))
         write(run/'region_plan.json',plan)
         write(run/'visual_qa.json',crop_regions(plan,run/'qa'))
         args=['--work',str(run),'--source',str(self.source),'--candidate',str(self.result)]
@@ -264,7 +283,7 @@ class ImageTests(unittest.TestCase):
         self.assertEqual(gate('advance','--stage','visual').returncode,1)
         qa=read(run/'visual_qa.json'); qa['status']='PASS'
         for row in qa['regions']:
-            row.update(status='PASS',reviewer='synthetic-test-only',notes='Synthetic protocol verification only',checks={k:'PASS' for k in CHECKS})
+            row.update(status='PASS',reviewer='synthetic-test-only',notes='Synthetic protocol verification only',checks={k:'PASS' for k in row['checks']})
         write(run/'visual_qa.json',qa)
         r=gate('advance','--stage','visual'); self.assertEqual(r.returncode,0,r.stdout+r.stderr)
         r=gate('finalize'); self.assertEqual(r.returncode,0,r.stdout+r.stderr)

@@ -8,6 +8,10 @@ from common import read, emit, sha, digest, cli_error
 CHECKS = ['text_clipping','overflow','overlap','image_crop','alignment','spacing',
           'shadow','border','hierarchy','reference_structure']
 
+OVERVIEW_CHECKS = ['alignment', 'hierarchy', 'reference_structure']
+
+def required_checks(region):
+    return OVERVIEW_CHECKS if region.get('full_slide') else CHECKS
 
 def crop_regions(plan, output):
     from PIL import Image
@@ -39,10 +43,11 @@ def crop_regions(plan, output):
                                 'image_sha256': sha(target), 'source_image': str(source),
                                 'source_sha256': sha(source), 'box': box,
                                 'status': 'NOT REVIEWED', 'reviewer': '', 'notes': '',
-                                'checks': {k: 'NOT REVIEWED' for k in CHECKS}})
+                                'scope': 'overview' if r.get('full_slide') else 'detail',
+                                'checks': {k: 'NOT REVIEWED' for k in required_checks(r)}})
             if not full:
                 raise ValueError('each slide requires a full-slide region')
-    qa = {'schema': 'kit.visual.v1', 'status': 'NOT REVIEWED',
+    qa = {'schema': 'kit.visual.v2', 'status': 'NOT REVIEWED',
           'artifact_sha256': plan['artifact_sha256'], 'region_plan_sha256': digest(plan),
           'regions': regions}
     return qa
