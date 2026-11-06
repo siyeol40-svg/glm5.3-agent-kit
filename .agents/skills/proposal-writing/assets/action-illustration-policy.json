@@ -1,0 +1,28 @@
+{
+  "schema_version": "1.0",
+  "scope": "reference-v8-actions",
+  "match_field": "title",
+  "coverage": "Closed title-marker checks block obvious illustration mismatches; not a general semantic or visual quality proof.",
+  "icons": [
+    {"icon":"heat_exchanger","intent":"Heat exchange or cooling","title_pattern":"(?i)(?<![A-Za-z])(?:Heat|Cooling|Cooler|Chiller)(?![A-Za-z])|열교환|냉각"},
+    {"icon":"oil","intent":"Oil or lubrication","title_pattern":"(?i)(?<![A-Za-z])(?:Oil|Lubricant|Lubrication)(?![A-Za-z])|윤활|오일"},
+    {"icon":"water","intent":"Water quality or supply","title_pattern":"(?i)(?<![A-Za-z])(?:Water|Feedwater|NEWater|Cooling)(?![A-Za-z])|용수|수질|급수"},
+    {"icon":"microbe","intent":"Biogrowth or microbial condition","title_pattern":"(?i)(?<![A-Za-z])(?:Bio[- ]?growth|Biofouling|Microbe|Organic)(?![A-Za-z])|미생물|생물막"},
+    {"icon":"clean","intent":"Chlorination or cleaning","title_pattern":"(?i)(?<![A-Za-z])(?:Chlorine|Chlorination|Cleaning|Clean|CIP)(?![A-Za-z])|세척|세정|염소"},
+    {"icon":"training","intent":"Training or education","title_pattern":"(?i)(?<![A-Za-z])(?:Training|Education|Operator)(?![A-Za-z])|교육|훈련|작업자"},
+    {"icon":"rotation","intent":"Polarity reversal or self-cleaning","title_pattern":"(?i)(?<![A-Za-z])(?:Reversal|Reverse|Polarity|Self[- ]cleaning|Rotation)(?![A-Za-z])|방향.?전환|극성|회전"},
+    {"icon":"shield","intent":"Safety or interlock","title_pattern":"(?i)(?<![A-Za-z])(?:Safety|Interlock|Protection)(?![A-Za-z])|안전|보호"},
+    {"icon":"monitor","intent":"Monitoring, sensor or control","title_pattern":"(?i)(?<![A-Za-z])(?:Monitor|Monitoring|Sensor|Alarm|HMI|Control|Pressure|Temperature)(?![A-Za-z])|계측|모니터|압력|온도"},
+    {"icon":"cost","intent":"Cost or economic comparison","title_pattern":"(?i)(?<![A-Za-z])(?:CAPEX|OPEX|Cost|Economics)(?![A-Za-z])|비용|원가|경제성"},
+    {"icon":"factory","intent":"Facility, load or reclaim separation","title_pattern":"(?i)(?<![A-Za-z])(?:Facility|Fab|Reclaim|Wastewater|Load|Process)(?![A-Za-z])|설비|공정|폐수"},
+    {"icon":"check","intent":"Test or verification","title_pattern":"(?i)(?<![A-Za-z])(?:Validation|Verify|Verification|Test|Qualification|Check)(?![A-Za-z])|시험|검증|판정|점검"},
+    {"icon":"vacuum_chamber","intent":"Vacuum chamber","title_pattern":"(?i)(?<![A-Za-z])(?:Vacuum|Chamber)(?![A-Za-z])|진공|챔버"},
+    {"icon":"part","intent":"Part or component","title_pattern":"(?i)(?<![A-Za-z])(?:Part|Component|Robot|Actuator)(?![A-Za-z])|부품|구동"},
+    {"icon":"erosion","intent":"Wear, erosion or corrosion","title_pattern":"(?i)(?<![A-Za-z])(?:Erosion|Wear|Corrosion)(?![A-Za-z])|마모|부식|침식"},
+    {"icon":"material","intent":"Material or coating","title_pattern":"(?i)(?<![A-Za-z])(?:Material|Coating|Ceramic|Alloy)(?![A-Za-z])|소재|재질|코팅|도금"},
+    {"icon":"energy","intent":"Energy or power","title_pattern":"(?i)(?<![A-Za-z])(?:Energy|Power|Electric|Electricity)(?![A-Za-z])|전력|에너지|전기"},
+    {"icon":"tank","intent":"Return, blending or storage","title_pattern":"(?i)(?<![A-Za-z])(?:Tank|Supply|Feedwater|Recycle|Return|Blending|NEWater)(?![A-Za-z])|탱크|혼합|환수|공급"},
+    {"icon":"filter","intent":"Filter or pretreatment","title_pattern":"(?i)(?<![A-Za-z])(?:Filter|Cartridge|Pretreatment)(?![A-Za-z])|여과|필터|전처리"},
+    {"icon":"membrane_stack","intent":"EDR or selective ion separation","title_pattern":"(?i)(?<![A-Za-z])(?:Membrane|Ion|EDR|Desalting|Cation|Anion)(?![A-Za-z])|선택막|이온"}
+  ]
+}

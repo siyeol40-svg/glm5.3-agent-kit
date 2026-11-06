@@ -1,0 +1,30 @@
+﻿{
+  "id": "rollout",
+  "layout_profile": "reference-v4",
+  "title": "",
+  "subtitle": "",
+  "takeaway": "",
+  "citation": "",
+  "source_ids": [],
+  "panels": [
+    {
+      "role": "coverage",
+      "kind": "table",
+      "title": "",
+      "source_ids": [],
+      "table": {
+        "headers": [],
+        "rows": []
+      }
+    },
+    {
+      "role": "expansion",
+      "kind": "flow",
+      "title": "",
+      "source_ids": [],
+      "steps": [],
+      "step_icons": []
+    }
+  ],
+  "scope": "proposal"
+}

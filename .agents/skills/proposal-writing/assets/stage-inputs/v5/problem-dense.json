@@ -1,0 +1,114 @@
+{
+  "id": "problem",
+  "layout_profile": "reference-v5-problem",
+  "title": "",
+  "subtitle": "",
+  "takeaway": "",
+  "citation": "",
+  "source_ids": [],
+  "problem": {
+    "comparison": {
+      "title": "",
+      "baseline": {
+        "title": "",
+        "items": [
+          "",
+          "",
+          ""
+        ],
+        "source_ids": []
+      },
+      "observed": {
+        "title": "",
+        "items": [
+          "",
+          "",
+          ""
+        ],
+        "source_ids": []
+      }
+    },
+    "path": {
+      "title": "",
+      "steps": [
+        {
+          "title": "",
+          "detail": "",
+          "icon": "monitor",
+          "source_ids": []
+        },
+        {
+          "title": "",
+          "detail": "",
+          "icon": "monitor",
+          "source_ids": []
+        },
+        {
+          "title": "",
+          "detail": "",
+          "icon": "monitor",
+          "source_ids": []
+        },
+        {
+          "title": "",
+          "detail": "",
+          "icon": "monitor",
+          "source_ids": []
+        }
+      ],
+      "relationship": "parallel"
+    },
+    "evidence": {
+      "title": "",
+      "kind": "table",
+      "source_ids": [],
+      "table": {
+        "headers": [
+          "",
+          ""
+        ],
+        "rows": [
+          [
+            "",
+            ""
+          ],
+          [
+            "",
+            ""
+          ],
+          [
+            "",
+            ""
+          ],
+          [
+            "",
+            ""
+          ]
+        ]
+      }
+    },
+    "impact": {
+      "title": "",
+      "groups": [
+        {
+          "title": "",
+          "lines": [
+            "",
+            ""
+          ],
+          "state": "supported",
+          "source_ids": []
+        },
+        {
+          "title": "",
+          "lines": [
+            "",
+            ""
+          ],
+          "state": "risk",
+          "source_ids": []
+        }
+      ]
+    }
+  }
+}

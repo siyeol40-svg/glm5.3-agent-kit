@@ -1,0 +1,29 @@
+﻿{
+  "id": "cause",
+  "layout_profile": "reference-v3",
+  "title": "",
+  "subtitle": "",
+  "takeaway": "",
+  "citation": "",
+  "source_ids": [],
+  "panels": [
+    {
+      "role": "evidence",
+      "kind": "table",
+      "title": "",
+      "source_ids": [],
+      "table": {
+        "headers": [],
+        "rows": []
+      }
+    },
+    {
+      "role": "causal",
+      "kind": "bullets",
+      "title": "",
+      "source_ids": [],
+      "lines": [],
+      "icon": ""
+    }
+  ]
+}

@@ -1,0 +1,113 @@
+{
+  "id": "cause",
+  "layout_profile": "reference-v9",
+  "title": "",
+  "subtitle": "",
+  "takeaway": "",
+  "citation": "",
+  "source_ids": [],
+  "panels": [
+    {
+      "role": "system",
+      "title": "",
+      "kind": "bullets",
+      "source_ids": [],
+      "lines": [
+        "",
+        "",
+        "",
+        ""
+      ]
+    },
+    {
+      "role": "evidence",
+      "title": "",
+      "kind": "table",
+      "source_ids": [],
+      "table": {
+        "headers": [
+          "",
+          ""
+        ],
+        "rows": [
+          [
+            "",
+            ""
+          ],
+          [
+            "",
+            ""
+          ],
+          [
+            "",
+            ""
+          ],
+          [
+            "",
+            ""
+          ],
+          [
+            "",
+            ""
+          ]
+        ]
+      }
+    },
+    {
+      "role": "causal",
+      "title": "",
+      "kind": "bullets",
+      "source_ids": [],
+      "lines": [
+        "",
+        "",
+        "",
+        ""
+      ],
+      "line_states": [
+        null,
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "role": "boundary",
+      "title": "",
+      "kind": "bullets",
+      "source_ids": [],
+      "lines": [
+        "",
+        "",
+        ""
+      ]
+    }
+  ],
+  "visuals": {
+    "kind": "water_cooled_plant",
+    "scope": "general_principle",
+    "source_id": "",
+    "locations": [
+      {
+        "role": "chiller",
+        "label": "",
+        "evidence_row": null
+      },
+      {
+        "role": "pump",
+        "label": "",
+        "evidence_row": null
+      },
+      {
+        "role": "tower",
+        "label": "",
+        "evidence_row": null
+      }
+    ],
+    "causal_order": [
+      null,
+      null,
+      null
+    ]
+  }
+}

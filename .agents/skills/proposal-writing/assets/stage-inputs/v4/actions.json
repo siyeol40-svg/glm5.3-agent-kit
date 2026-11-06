@@ -1,0 +1,38 @@
+﻿{
+  "id": "actions",
+  "layout_profile": "reference-v4",
+  "title": "",
+  "subtitle": "",
+  "takeaway": "",
+  "citation": "",
+  "source_ids": [],
+  "panels": [
+    {
+      "role": "action",
+      "kind": "bullets",
+      "title": "",
+      "source_ids": [],
+      "lines": [],
+      "icon": "",
+      "outcome": ""
+    },
+    {
+      "role": "action",
+      "kind": "bullets",
+      "title": "",
+      "source_ids": [],
+      "lines": [],
+      "icon": "",
+      "outcome": ""
+    },
+    {
+      "role": "action",
+      "kind": "bullets",
+      "title": "",
+      "source_ids": [],
+      "lines": [],
+      "icon": "",
+      "outcome": ""
+    }
+  ]
+}

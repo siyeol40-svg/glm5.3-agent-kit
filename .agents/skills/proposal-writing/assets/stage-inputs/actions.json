@@ -1,0 +1,17 @@
+{
+  "id": "actions",
+  "layout_profile": "reference-v2",
+  "title": "",
+  "subtitle": "",
+  "takeaway": "",
+  "citation": "",
+  "source_ids": [],
+  "panels": [
+    {"kind": "bullets", "title": "", "source_ids": [], "icon": "", "outcome": "", "lines": []},
+    {"kind": "bullets", "title": "", "source_ids": [], "icon": "", "outcome": "", "lines": []},
+    {"kind": "bullets", "title": "", "source_ids": [], "icon": "", "outcome": "", "lines": []},
+    {"kind": "bullets", "title": "", "source_ids": [], "icon": "", "outcome": "", "lines": []},
+    {"kind": "bullets", "title": "", "source_ids": [], "icon": "", "outcome": "", "lines": []},
+    {"kind": "bullets", "title": "", "source_ids": [], "icon": "", "outcome": "", "lines": []}
+  ]
+}

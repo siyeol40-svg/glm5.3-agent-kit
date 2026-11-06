@@ -1,0 +1,27 @@
+﻿{
+  "id": "effects",
+  "layout_profile": "reference-v4",
+  "title": "",
+  "subtitle": "",
+  "takeaway": "",
+  "citation": "",
+  "source_ids": [],
+  "panels": [
+    {
+      "role": "outcomes",
+      "kind": "metrics",
+      "title": "",
+      "source_ids": [],
+      "metrics": []
+    },
+    {
+      "role": "details",
+      "kind": "bullets",
+      "title": "",
+      "source_ids": [],
+      "lines": [],
+      "icon": "",
+      "line_states": []
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+﻿{
+  "id": "problem",
+  "layout_profile": "reference-v3",
+  "title": "",
+  "subtitle": "",
+  "takeaway": "",
+  "citation": "",
+  "source_ids": [],
+  "panels": [
+    {
+      "role": "context",
+      "kind": "bullets",
+      "title": "",
+      "source_ids": [],
+      "lines": [],
+      "icon": ""
+    },
+    {
+      "role": "phenomenon",
+      "kind": "flow",
+      "title": "",
+      "source_ids": [],
+      "steps": [],
+      "step_icons": []
+    }
+  ]
+}

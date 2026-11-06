@@ -1,0 +1,34 @@
+﻿{
+  "id": "problem",
+  "layout_profile": "reference-v4",
+  "title": "",
+  "subtitle": "",
+  "takeaway": "",
+  "citation": "",
+  "source_ids": [],
+  "panels": [
+    {
+      "role": "context",
+      "kind": "asset",
+      "title": "",
+      "source_ids": [],
+      "asset": {
+        "document_name": "",
+        "slide_index": null,
+        "shape_name": "",
+        "description": "",
+        "reference_kind": "picture",
+        "known_visible_aspect_ratio": null,
+        "origin": "provided"
+      }
+    },
+    {
+      "role": "phenomenon",
+      "kind": "flow",
+      "title": "",
+      "source_ids": [],
+      "steps": [],
+      "step_icons": []
+    }
+  ]
+}

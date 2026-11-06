@@ -1,0 +1,92 @@
+{
+  "id": "rollout",
+  "layout_profile": "reference-v6",
+  "title": "",
+  "subtitle": "",
+  "takeaway": "",
+  "citation": "",
+  "source_ids": [],
+  "panels": [
+    {
+      "role": "coverage",
+      "title": "",
+      "kind": "table",
+      "source_ids": [],
+      "table": {
+        "headers": [
+          "",
+          ""
+        ],
+        "rows": [
+          [
+            "",
+            ""
+          ],
+          [
+            "",
+            ""
+          ],
+          [
+            "",
+            ""
+          ],
+          [
+            "",
+            ""
+          ],
+          [
+            "",
+            ""
+          ]
+        ]
+      }
+    },
+    {
+      "role": "expansion",
+      "title": "",
+      "kind": "flow",
+      "source_ids": [],
+      "steps": [
+        "",
+        "",
+        "",
+        ""
+      ],
+      "step_icons": [
+        "tank",
+        "filter",
+        "membrane_stack",
+        "check"
+      ]
+    },
+    {
+      "role": "checks",
+      "title": "",
+      "kind": "bullets",
+      "source_ids": [],
+      "lines": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+      ]
+    },
+    {
+      "role": "acceptance",
+      "title": "",
+      "kind": "bullets",
+      "source_ids": [],
+      "lines": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+      ]
+    }
+  ],
+  "scope": "proposal"
+}

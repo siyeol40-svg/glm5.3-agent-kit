@@ -1,0 +1,96 @@
+{
+  "id": "actions",
+  "layout_profile": "reference-v10-actions",
+  "title": "",
+  "subtitle": "",
+  "takeaway": "",
+  "citation": "",
+  "source_ids": [],
+  "panels": [
+    {
+      "role": "action",
+      "title": "",
+      "kind": "bullets",
+      "source_ids": [],
+      "lines": [
+        "",
+        "",
+        ""
+      ],
+      "icon": null,
+      "outcome": ""
+    },
+    {
+      "role": "action",
+      "title": "",
+      "kind": "bullets",
+      "source_ids": [],
+      "lines": [
+        "",
+        "",
+        ""
+      ],
+      "icon": null,
+      "outcome": ""
+    },
+    {
+      "role": "action",
+      "title": "",
+      "kind": "bullets",
+      "source_ids": [],
+      "lines": [
+        "",
+        "",
+        ""
+      ],
+      "icon": null,
+      "outcome": ""
+    },
+    {
+      "role": "action",
+      "title": "",
+      "kind": "bullets",
+      "source_ids": [],
+      "lines": [
+        "",
+        "",
+        ""
+      ],
+      "icon": null,
+      "outcome": ""
+    },
+    {
+      "role": "action",
+      "title": "",
+      "kind": "bullets",
+      "source_ids": [],
+      "lines": [
+        "",
+        "",
+        ""
+      ],
+      "icon": null,
+      "outcome": ""
+    },
+    {
+      "role": "action",
+      "title": "",
+      "kind": "bullets",
+      "source_ids": [],
+      "lines": [
+        "",
+        "",
+        ""
+      ],
+      "icon": null,
+      "outcome": ""
+    }
+  ],
+  "visuals": {
+    "kind": "grouped_actions",
+    "group_titles": [
+      "",
+      ""
+    ]
+  }
+}

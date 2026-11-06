@@ -1,0 +1,15 @@
+{
+  "id": "rollout",
+  "layout_profile": "reference-v2",
+  "title": "",
+  "subtitle": "",
+  "takeaway": "",
+  "citation": "",
+  "scope": "",
+  "source_ids": [],
+  "panels": [
+    {"kind": "table", "title": "", "source_ids": [], "table": {"headers": [], "rows": []}},
+    {"kind": "flow", "title": "", "source_ids": [], "steps": [], "step_icons": []},
+    {"kind": "bullets", "title": "", "source_ids": [], "icon": "", "lines": []}
+  ]
+}

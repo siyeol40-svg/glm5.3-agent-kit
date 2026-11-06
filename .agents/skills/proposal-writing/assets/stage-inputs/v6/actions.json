@@ -1,0 +1,89 @@
+{
+  "id": "actions",
+  "layout_profile": "reference-v6",
+  "title": "",
+  "subtitle": "",
+  "takeaway": "",
+  "citation": "",
+  "source_ids": [],
+  "panels": [
+    {
+      "role": "action",
+      "title": "",
+      "kind": "bullets",
+      "source_ids": [],
+      "lines": [
+        "",
+        "",
+        ""
+      ],
+      "icon": "filter",
+      "outcome": ""
+    },
+    {
+      "role": "action",
+      "title": "",
+      "kind": "bullets",
+      "source_ids": [],
+      "lines": [
+        "",
+        "",
+        ""
+      ],
+      "icon": "filter",
+      "outcome": ""
+    },
+    {
+      "role": "action",
+      "title": "",
+      "kind": "bullets",
+      "source_ids": [],
+      "lines": [
+        "",
+        "",
+        ""
+      ],
+      "icon": "filter",
+      "outcome": ""
+    },
+    {
+      "role": "action",
+      "title": "",
+      "kind": "bullets",
+      "source_ids": [],
+      "lines": [
+        "",
+        "",
+        ""
+      ],
+      "icon": "filter",
+      "outcome": ""
+    },
+    {
+      "role": "action",
+      "title": "",
+      "kind": "bullets",
+      "source_ids": [],
+      "lines": [
+        "",
+        "",
+        ""
+      ],
+      "icon": "filter",
+      "outcome": ""
+    },
+    {
+      "role": "action",
+      "title": "",
+      "kind": "bullets",
+      "source_ids": [],
+      "lines": [
+        "",
+        "",
+        ""
+      ],
+      "icon": "filter",
+      "outcome": ""
+    }
+  ]
+}

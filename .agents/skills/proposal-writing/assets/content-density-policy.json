@@ -1,0 +1,68 @@
+{
+  "policy_version": "content-density-v1",
+  "counting_basis": "machine-defined visible information units; not earlier human concept counts",
+  "semantic_quality": "not_proven_by_count",
+  "supported_profiles": [
+    "reference-v2",
+    "reference-v3",
+    "reference-v4",
+    "reference-v5-problem",
+    "reference-v6",
+    "reference-v7",
+    "reference-v8-actions",
+    "reference-v9",
+    "reference-v10-actions"
+  ],
+  "stages": {
+    "problem": {
+      "baseline": 12,
+      "multiplier": 1.5,
+      "minimum": 18
+    },
+    "cause": {
+      "baseline": 5,
+      "multiplier": 3,
+      "minimum": 15
+    },
+    "actions": {
+      "baseline": 6,
+      "multiplier": 3,
+      "minimum": 18
+    },
+    "effects": {
+      "baseline": 5,
+      "multiplier": 3,
+      "minimum": 15
+    },
+    "rollout": {
+      "baseline": 7,
+      "multiplier": 3,
+      "minimum": 21
+    }
+  },
+  "unit_kinds": [
+    "bullet",
+    "step",
+    "table_row",
+    "metric",
+    "bar"
+  ],
+  "excluded_fields": [
+    "title",
+    "subtitle",
+    "takeaway",
+    "citation",
+    "outcome",
+    "note",
+    "icon",
+    "asset",
+    "source_ids",
+    "ledger",
+    "visuals"
+  ],
+  "deduplication": [
+    "same statement after Unicode NFKC normalization, invisible format/control removal and whitespace/punctuation removal; numeric separators/signs retained",
+    "same exact sorted binding ID set across representations"
+  ],
+  "visibility": "All row cells, metric or bar labels and values, and other full unit strings must exist in compiled displayed native text shapes. This is not pixel or aesthetic QA."
+}

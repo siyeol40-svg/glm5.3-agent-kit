@@ -1,0 +1,14 @@
+{
+  "id": "effects",
+  "layout_profile": "reference-v2",
+  "title": "",
+  "subtitle": "",
+  "takeaway": "",
+  "citation": "",
+  "source_ids": [],
+  "panels": [
+    {"kind": "metrics", "title": "", "source_ids": [], "metrics": []},
+    {"kind": "table", "title": "", "source_ids": [], "table": {"headers": [], "rows": []}},
+    {"kind": "flow", "title": "", "source_ids": [], "steps": [], "step_icons": [], "relationship": "sum"}
+  ]
+}

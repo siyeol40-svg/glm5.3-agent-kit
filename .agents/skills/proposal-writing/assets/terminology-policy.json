@@ -1,0 +1,395 @@
+{
+  "policy_version": "ko-en-nouns-v1",
+  "style": "English technical nouns with natural Korean sentences",
+  "coverage": "fixed glossary; not a general Korean noun recognizer",
+  "keep_korean": [
+    "fixed page section labels",
+    "Korean grammar and verbs",
+    "business explanation where English is unnatural",
+    "units already declared in the verified number ledger"
+  ],
+  "terms": [
+    {
+      "english": "Semiconductor",
+      "korean": [
+        "반도체"
+      ]
+    },
+    {
+      "english": "Wafer",
+      "korean": [
+        "웨이퍼"
+      ]
+    },
+    {
+      "english": "Local Scrubber",
+      "korean": [
+        "로컬 스크러버",
+        "스크러버"
+      ]
+    },
+    {
+      "english": "Wastewater",
+      "korean": [
+        "폐수"
+      ]
+    },
+    {
+      "english": "Fine Silica",
+      "korean": [
+        "미세실리카",
+        "미세 실리카"
+      ]
+    },
+    {
+      "english": "Silica",
+      "korean": [
+        "실리카"
+      ]
+    },
+    {
+      "english": "Fluoride",
+      "korean": [
+        "불소"
+      ]
+    },
+    {
+      "english": "HF",
+      "korean": [
+        "불산"
+      ]
+    },
+    {
+      "english": "Chlorine",
+      "korean": [
+        "염소"
+      ]
+    },
+    {
+      "english": "Cartridge",
+      "korean": [
+        "카트리지"
+      ]
+    },
+    {
+      "english": "Filter",
+      "korean": [
+        "필터"
+      ]
+    },
+    {
+      "english": "RO",
+      "korean": [
+        "역삼투"
+      ]
+    },
+    {
+      "english": "UF",
+      "korean": [
+        "한외여과"
+      ]
+    },
+    {
+      "english": "Pretreatment",
+      "korean": [
+        "전처리"
+      ]
+    },
+    {
+      "english": "Biofouling",
+      "korean": [
+        "생물오염",
+        "생물 오염"
+      ]
+    },
+    {
+      "english": "Biogrowth",
+      "korean": [
+        "생물증식",
+        "생물 증식"
+      ]
+    },
+    {
+      "english": "SDI",
+      "korean": [
+        "오염지수",
+        "오염 지수"
+      ]
+    },
+    {
+      "english": "Recovery",
+      "korean": [
+        "회수율"
+      ]
+    },
+    {
+      "english": "Feedwater",
+      "korean": [
+        "공급수"
+      ]
+    },
+    {
+      "english": "Tank",
+      "korean": [
+        "탱크"
+      ]
+    },
+    {
+      "english": "Fab",
+      "korean": [
+        "팹"
+      ]
+    },
+    {
+      "english": "Polarity Reversal",
+      "korean": [
+        "극성전환",
+        "극성 전환"
+      ]
+    },
+    {
+      "english": "CIP",
+      "korean": [
+        "현장세정",
+        "현장 세정"
+      ]
+    },
+    {
+      "english": "Self-cleaning",
+      "korean": [
+        "자가세정",
+        "자가 세정"
+      ]
+    },
+    {
+      "english": "Service Life",
+      "korean": [
+        "수명"
+      ]
+    },
+    {
+      "english": "CAPEX",
+      "korean": [
+        "투자비"
+      ]
+    },
+    {
+      "english": "OPEX",
+      "korean": [
+        "운전비"
+      ]
+    },
+    {
+      "english": "Flow Rate",
+      "korean": [
+        "유량"
+      ]
+    },
+    {
+      "english": "Temperature",
+      "korean": [
+        "온도"
+      ]
+    },
+    {
+      "english": "Concentration",
+      "korean": [
+        "농도"
+      ]
+    },
+    {
+      "english": "Footprint",
+      "korean": [
+        "설치면적",
+        "설치 면적"
+      ]
+    },
+    {
+      "english": "Electric Field",
+      "korean": [
+        "전기장"
+      ]
+    },
+    {
+      "english": "DC",
+      "korean": [
+        "직류"
+      ]
+    },
+    {
+      "english": "Selective Membrane",
+      "korean": [
+        "선택막"
+      ]
+    },
+    {
+      "english": "Diluate",
+      "korean": [
+        "탈염수"
+      ]
+    },
+    {
+      "english": "Concentrate",
+      "korean": [
+        "농축수"
+      ]
+    },
+    {
+      "english": "Process",
+      "korean": [
+        "공정"
+      ]
+    },
+    {
+      "english": "System",
+      "korean": [
+        "시스템",
+        "계통"
+      ]
+    },
+    {
+      "english": "Equipment",
+      "korean": [
+        "설비",
+        "장비"
+      ]
+    },
+    {
+      "english": "Component",
+      "korean": [
+        "컴포넌트",
+        "부품"
+      ]
+    },
+    {
+      "english": "Patch",
+      "korean": [
+        "패치"
+      ]
+    },
+    {
+      "english": "Crash",
+      "korean": [
+        "크래시",
+        "크래쉬"
+      ]
+    },
+    {
+      "english": "Unload",
+      "korean": [
+        "언로드"
+      ]
+    },
+    {
+      "english": "Robot",
+      "korean": [
+        "로봇"
+      ]
+    },
+    {
+      "english": "Piping",
+      "korean": [
+        "배관"
+      ]
+    },
+    {
+      "english": "Feed",
+      "korean": [
+        "유입수"
+      ]
+    },
+    {
+      "english": "Product Water",
+      "korean": [
+        "처리수"
+      ]
+    },
+    {
+      "english": "Pressure",
+      "korean": [
+        "압력"
+      ]
+    },
+    {
+      "english": "DP",
+      "korean": [
+        "차압"
+      ]
+    },
+    {
+      "english": "Level",
+      "korean": [
+        "수위"
+      ]
+    },
+    {
+      "english": "Voltage",
+      "korean": [
+        "전압"
+      ]
+    },
+    {
+      "english": "Anion",
+      "korean": [
+        "음이온"
+      ]
+    },
+    {
+      "english": "Cation",
+      "korean": [
+        "양이온"
+      ]
+    },
+    {
+      "english": "Ion",
+      "korean": [
+        "이온"
+      ]
+    },
+    {
+      "english": "Flocculation",
+      "korean": [
+        "응집"
+      ]
+    },
+    {
+      "english": "Precipitation",
+      "korean": [
+        "침전반응",
+        "침전"
+      ]
+    },
+    {
+      "english": "Sedimentation",
+      "korean": [
+        "침강"
+      ]
+    },
+    {
+      "english": "Membrane",
+      "korean": [
+        "분리막",
+        "멤브레인"
+      ]
+    },
+    {
+      "english": "Fouling",
+      "korean": [
+        "막오염",
+        "막 오염"
+      ]
+    },
+    {
+      "english": "Cleaning",
+      "korean": [
+        "세정"
+      ]
+    },
+    {
+      "english": "Water Quality",
+      "korean": [
+        "수질"
+      ]
+    }
+  ]
+}

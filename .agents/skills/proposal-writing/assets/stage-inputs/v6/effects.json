@@ -1,0 +1,91 @@
+{
+  "id": "effects",
+  "layout_profile": "reference-v6",
+  "title": "",
+  "subtitle": "",
+  "takeaway": "",
+  "citation": "",
+  "source_ids": [],
+  "panels": [
+    {
+      "role": "outcomes",
+      "title": "",
+      "kind": "metrics",
+      "source_ids": [],
+      "metrics": [
+        {
+          "label": "",
+          "value_text": "",
+          "detail": ""
+        },
+        {
+          "label": "",
+          "value_text": "",
+          "detail": ""
+        },
+        {
+          "label": "",
+          "value_text": "",
+          "detail": ""
+        }
+      ]
+    },
+    {
+      "role": "details",
+      "title": "",
+      "kind": "table",
+      "source_ids": [],
+      "table": {
+        "headers": [
+          "",
+          ""
+        ],
+        "rows": [
+          [
+            "",
+            ""
+          ],
+          [
+            "",
+            ""
+          ],
+          [
+            "",
+            ""
+          ],
+          [
+            "",
+            ""
+          ],
+          [
+            "",
+            ""
+          ]
+        ]
+      }
+    },
+    {
+      "role": "operation",
+      "title": "",
+      "kind": "bullets",
+      "source_ids": [],
+      "lines": [
+        "",
+        "",
+        "",
+        ""
+      ]
+    },
+    {
+      "role": "boundary",
+      "title": "",
+      "kind": "bullets",
+      "source_ids": [],
+      "lines": [
+        "",
+        "",
+        ""
+      ]
+    }
+  ]
+}

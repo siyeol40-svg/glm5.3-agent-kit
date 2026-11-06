@@ -1,0 +1,22 @@
+{
+  "title": "",
+  "subtitle": "",
+  "takeaway": "",
+  "comparison_title": "",
+  "baseline_title": "",
+  "baseline_focus": null,
+  "baseline": [["", ""], ["", ""], ["", ""]],
+  "observed_title": "",
+  "observed_focus": null,
+  "observed": [["", ""], ["", ""], ["", ""]],
+  "procedure_title": "",
+  "procedure": [["", "", ""], ["", "", ""], ["", "", ""], ["", "", ""]],
+  "table_title": "",
+  "table_headers": ["", ""],
+  "table": [["", "", ""], ["", "", ""], ["", "", ""], ["", "", ""]],
+  "impact_title": "",
+  "impact": [
+    {"title": "", "state": "supported", "lines": [["", ""], ["", ""]]},
+    {"title": "", "state": "supported", "lines": [["", ""], ["", ""]]}
+  ]
+}

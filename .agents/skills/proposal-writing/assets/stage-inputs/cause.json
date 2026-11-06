@@ -1,0 +1,15 @@
+{
+  "id": "cause",
+  "layout_profile": "reference-v2",
+  "title": "",
+  "subtitle": "",
+  "takeaway": "",
+  "citation": "",
+  "source_ids": [],
+  "panels": [
+    {"kind": "bullets", "title": "", "source_ids": [], "icon": "", "lines": []},
+    {"kind": "table", "title": "", "source_ids": [], "table": {"headers": [], "rows": []}},
+    {"kind": "bullets", "title": "", "source_ids": [], "icon": "", "lines": []},
+    {"kind": "flow", "title": "", "source_ids": [], "steps": [], "step_icons": []}
+  ]
+}

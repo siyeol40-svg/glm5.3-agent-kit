@@ -1,0 +1,87 @@
+{
+  "id": "cause",
+  "layout_profile": "reference-v6",
+  "title": "",
+  "subtitle": "",
+  "takeaway": "",
+  "citation": "",
+  "source_ids": [],
+  "panels": [
+    {
+      "role": "system",
+      "title": "",
+      "kind": "bullets",
+      "source_ids": [],
+      "lines": [
+        "",
+        "",
+        "",
+        ""
+      ],
+      "icon": "membrane_stack"
+    },
+    {
+      "role": "evidence",
+      "title": "",
+      "kind": "table",
+      "source_ids": [],
+      "table": {
+        "headers": [
+          "",
+          ""
+        ],
+        "rows": [
+          [
+            "",
+            ""
+          ],
+          [
+            "",
+            ""
+          ],
+          [
+            "",
+            ""
+          ],
+          [
+            "",
+            ""
+          ],
+          [
+            "",
+            ""
+          ]
+        ]
+      }
+    },
+    {
+      "role": "causal",
+      "title": "",
+      "kind": "flow",
+      "source_ids": [],
+      "steps": [
+        "",
+        "",
+        "",
+        ""
+      ],
+      "step_icons": [
+        "tank",
+        "filter",
+        "membrane_stack",
+        "check"
+      ]
+    },
+    {
+      "role": "boundary",
+      "title": "",
+      "kind": "bullets",
+      "source_ids": [],
+      "lines": [
+        "",
+        "",
+        ""
+      ]
+    }
+  ]
+}

@@ -1,0 +1,107 @@
+{
+  "id": "effects",
+  "layout_profile": "reference-v7",
+  "title": "",
+  "subtitle": "",
+  "takeaway": "",
+  "citation": "",
+  "source_ids": [],
+  "panels": [
+    {
+      "role": "outcomes",
+      "title": "",
+      "kind": "metrics",
+      "source_ids": [],
+      "metrics": [
+        {
+          "label": "",
+          "value_text": "",
+          "detail": ""
+        },
+        {
+          "label": "",
+          "value_text": "",
+          "detail": ""
+        },
+        {
+          "label": "",
+          "value_text": "",
+          "detail": ""
+        }
+      ]
+    },
+    {
+      "role": "details",
+      "title": "",
+      "kind": "table",
+      "source_ids": [],
+      "table": {
+        "headers": [
+          "",
+          ""
+        ],
+        "rows": [
+          [
+            "",
+            ""
+          ],
+          [
+            "",
+            ""
+          ],
+          [
+            "",
+            ""
+          ],
+          [
+            "",
+            ""
+          ],
+          [
+            "",
+            ""
+          ]
+        ]
+      }
+    },
+    {
+      "role": "operation",
+      "title": "",
+      "kind": "bullets",
+      "source_ids": [],
+      "lines": [
+        "",
+        "",
+        "",
+        ""
+      ]
+    },
+    {
+      "role": "boundary",
+      "title": "",
+      "kind": "bullets",
+      "source_ids": [],
+      "lines": [
+        "",
+        "",
+        ""
+      ]
+    }
+  ],
+  "visuals": {
+    "kind": "performance",
+    "metric_kinds": [
+      "recovery_percent",
+      "removal_percent",
+      "upper_bound"
+    ],
+    "detail_kinds": [
+      "combined_multiplier",
+      "projected_lifetime",
+      "supply_spec",
+      "biogrowth_control",
+      "silica_observation"
+    ],
+    "interval_line": 0
+  }
+}

@@ -1,0 +1,108 @@
+{
+  "id": "cause",
+  "layout_profile": "reference-v9",
+  "title": "",
+  "subtitle": "",
+  "takeaway": "",
+  "citation": "",
+  "source_ids": [],
+  "panels": [
+    {
+      "role": "system",
+      "title": "",
+      "kind": "bullets",
+      "source_ids": [],
+      "lines": [
+        "",
+        "",
+        "",
+        ""
+      ]
+    },
+    {
+      "role": "evidence",
+      "title": "",
+      "kind": "table",
+      "source_ids": [],
+      "table": {
+        "headers": [
+          "",
+          ""
+        ],
+        "rows": [
+          [
+            "",
+            ""
+          ],
+          [
+            "",
+            ""
+          ],
+          [
+            "",
+            ""
+          ],
+          [
+            "",
+            ""
+          ],
+          [
+            "",
+            ""
+          ]
+        ]
+      }
+    },
+    {
+      "role": "causal",
+      "title": "",
+      "kind": "bullets",
+      "source_ids": [],
+      "lines": [
+        "",
+        "",
+        "",
+        ""
+      ],
+      "line_states": [
+        null,
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "role": "boundary",
+      "title": "",
+      "kind": "bullets",
+      "source_ids": [],
+      "lines": [
+        "",
+        "",
+        ""
+      ]
+    }
+  ],
+  "visuals": {
+    "kind": "evidence_path",
+    "locations": [
+      {
+        "label": "",
+        "evidence_row": null
+      },
+      {
+        "label": "",
+        "evidence_row": null
+      },
+      {
+        "label": "",
+        "evidence_row": null
+      }
+    ],
+    "causal_order": [
+      null,
+      null,
+      null
+    ]
+  }
+}
